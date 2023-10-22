@@ -1,4 +1,4 @@
-# include "tache.hpp"
+# include "../includes/tache.hpp"
 
 int Tache::lastId = 0;
 
@@ -41,9 +41,7 @@ Tache& Tache::operator=(const Tache& other) {
 
 Tache::~Tache()
 {
-	for (Tache* dep : dependances) {
-        delete dep;
-    }
+	dependances.clear();
 	cout << "Cellule détruite: " << *this << endl;
 }
 

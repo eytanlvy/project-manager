@@ -1,19 +1,31 @@
-CPP = g++ -std=c++11 -Wall
-OBJS = tache.o projet.o  # Liste de tous les fichiers objets nécessaires
+CPP = g++
+CPPFLAGS = -std=c++11 -Wall
+SRCDIR = src
+INCDIR = includes
+OBJDIR = obj
 
-all: tache
+# Liste de tous les fichiers sources dans le répertoire src
+SRCS = $(wildcard $(SRCDIR)/*.cpp)
 
-tache: $(OBJS)
-	$(CPP) -o tache $(OBJS)
+# Génération de la liste des fichiers objets
+OBJS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SRCS))
 
-tache.o: tache.cpp
-	$(CPP) -c tache.cpp
+# Nom de l'exécutable
+TARGET = run
 
-list.o: list.cpp
-	$(CPP) -c list.cpp
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CPP) -o $@ $^
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	@if [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
+	$(CPP) $(CPPFLAGS) -I$(INCDIR) -c $< -o $@
 
 clean:
-	rm -f *.o
+	rm -rf $(OBJDIR)
 
 fclean: clean
-	rm -f tache
+	rm -f $(TARGET)
+
+re: fclean all
