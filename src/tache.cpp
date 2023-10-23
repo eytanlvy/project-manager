@@ -7,41 +7,36 @@ Tache::Tache(const string& nom, int duree) : nom(nom), id(++lastId), duree(duree
 	cout << "Naissance de : " << *this << endl;
 }
 
-Tache::Tache(const Tache& other) {
-    nom = other.nom;
-    id = other.id;
-    duree = other.duree;
-    realisee = other.realisee;
-
+Tache::Tache(const Tache& other): nom(other.nom), id(other.id), duree(other.duree), realisee(other.realisee)
+{
+    cout << "Copie de : " << *this << endl;
     dependances.clear();
-    for (Tache* dep : other.dependances) {
+    for (Tache* dep : other.dependances)
         dependances.push_back(new Tache(*dep));
-    }
 }
 
-Tache& Tache::operator=(const Tache& other) {
-    if (this == &other) {
+Tache& Tache::operator=(const Tache& other)
+{
+    if (this == &other)
         return *this;
-    }
+
     nom = other.nom;
     id = other.id;
     duree = other.duree;
     realisee = other.realisee;
 
-    for (Tache* dep : dependances) {
-        delete dep;
-    }
     dependances.clear();
-    for (Tache* dep : other.dependances) {
-        dependances.push_back(new Tache(*dep));
-    }
+    for (Tache* dep : other.dependances)
+        this->ajouteDependance(*dep);
 
-    return *this;
+    return (*this);
 }
 
 Tache::~Tache()
 {
-	dependances.clear();
+    dependances.clear();
+    for (Tache* tache : dependances)
+		delete tache;
 	cout << "Cellule détruite: " << *this << endl;
 }
 
@@ -89,6 +84,8 @@ bool Tache::realise()
 bool Tache::depends_from(Tache & x)
 {
 	int i{0};
+    if (id == x.getId())
+        return (true);
 	while (i < dependances.size())
 	{
 		if (dependances[i]->getId() == x.getId() || dependances[i]->depends_from(x))
@@ -101,7 +98,7 @@ bool Tache::depends_from(Tache & x)
 
 bool Tache::ajouteDependance(Tache & x)
 {
-	if (x.depends_from(*this) || id == x.getId())
+	if (this->depends_from(x) || x.depends_from(*this) || id == x.getId())
 		return (false);
 	dependances.push_back(&x);
 	return (true);
@@ -109,20 +106,13 @@ bool Tache::ajouteDependance(Tache & x)
 
 int Tache::dureeParal()
 {
-	if (realisee)
-		return (0);
-	int i{0}, max{duree};
+	int i{0}, maxi{duree};
 	while (i < dependances.size())
 	{
-		if (!dependances[i]->getRealisee())
-		{
-			int tmp = dependances[i]->dureeParal();
-			if (tmp > max)
-				max = tmp;
-		}
+		maxi = max(dependances[i]->dureeParal(), maxi);
 		i++;
 	}
-	return (max);
+	return (max(duree, maxi));
 }
 
 
@@ -130,36 +120,4 @@ ostream& operator<<( ostream &out , const Tache &x )
 {
 	out << "Tache #" << x.getId() << " : " << x.getNom();
 	return (out);
-}
-
-
-int main() {
-    // Test 1: Tâches et dépendances
-    Tache tache1("Tache1", 3);
-    Tache tache2("Tache2", 2);
-    Tache tache3("Tache3", 4);
-
-    tache1.ajouteDependance(tache2);
-    tache1.ajouteDependance(tache3);
-    tache2.ajouteDependance(tache3);
-
-    std::cout << "Test 1 - Tâches et dépendances : " << std::endl;
-    std::cout << "Tâches : " << std::endl;
-    std::cout << tache1 << ", Dépendances : " << (tache1.depends_from(tache2) ? "Oui" : "Non") << std::endl;
-    std::cout << tache2 << ", Dépendances : " << (tache2.depends_from(tache3) ? "Oui" : "Non") << std::endl;
-    std::cout << tache3 << ", Dépendances : " << (tache3.depends_from(tache1) ? "Oui" : "Non") << std::endl;
-
-    // Test 2: Durée totale de réalisation
-    Tache tache4("Tache4", 2);
-    Tache tache5("Tache5", 1);
-
-    tache4.ajouteDependance(tache1);
-    tache4.ajouteDependance(tache2);
-    tache5.ajouteDependance(tache4);
-
-    std::cout << "Test 2 - Durée totale de réalisation : " << std::endl;
-    int dureeTotale = tache5.dureeParal();
-    std::cout << "Durée totale de réalisation de tache5 : " << dureeTotale << std::endl;
-
-    return 0;
 }
