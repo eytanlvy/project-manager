@@ -13,13 +13,13 @@ class Projet
 		Projet();
 		Projet(const Projet& other);
 		Projet& operator=(const Projet& other);
-		vector<Tache*> const getTaches() const;
+		vector<Tache*> const consult_tasks() const;
 		virtual ~Projet();
 		pair<int,int> pick_two_random_tasks();
 		Tache* contains(string name);
 		Tache* contains(int id);
-
-
+		void topological_sort();
+		void cleanMarks();
 	
 };
 ostream& operator<<( ostream &out , const Projet &x );

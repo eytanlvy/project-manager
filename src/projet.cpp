@@ -8,9 +8,8 @@ Projet::Projet()
 Projet::Projet(const Projet& other)
 {
 	taches.clear();
-	for (Tache* tache : other.taches) {
+	for (Tache* const &tache : other.taches) {
 		taches.push_back(new Tache(*tache));
-		delete tache;
 	}
 }
 
@@ -20,7 +19,7 @@ Projet& Projet::operator=(const Projet& other)
 		return *this;
 	}
 	taches.clear();
-	for (Tache* tache : other.taches) {
+	for (Tache* const &tache : other.taches) {
 		taches.push_back(new Tache(*tache));
 	}
 	return *this;
@@ -35,7 +34,7 @@ Projet::~Projet()
 	cout << "Cellule détruite: " << *this << endl;
 }
 
-vector<Tache*> const Projet::getTaches() const
+vector<Tache*> const Projet::consult_tasks() const
 {
 	return (taches);
 }
@@ -64,17 +63,40 @@ Tache* Projet::contains (string name)
 
 Tache* Projet::contains (int id)
 {
-	for (Tache* tache : taches) {
-		if (tache->getId() == id) {
+	for (Tache* tache : taches)
+	{
+		if (tache->getId() == id)
 			return tache;
-		}
 	}
 	return NULL;
 }
 
+void Projet::topological_sort()
+{
+	cleanMarks();
+
+    vector<Tache*> sortedTasks;
+
+    // Parcourir toutes les tâches du projet
+    for (Tache* task : taches)
+    {
+        // Si la tâche n'est pas marquée, commencez un parcours en profondeur postfixe
+        if (!task->is_marked())
+        {
+            task->PP_postfixe(sortedTasks);
+        }
+    }
+
+}
+
+void Projet::cleanMarks()
+{
+    for (Tache* task : taches)
+        task->mark(0);
+}
 ostream& operator<<( ostream &out , const Projet &x )
 {
-	vector <Tache*> gtaches {x.getTaches()};
+	vector <Tache*> gtaches {x.consult_tasks()};
 	for (int i {0}; i < gtaches.size() - 1; i++) {
 		out << *gtaches[i] << ", ";
 	}
@@ -104,7 +126,9 @@ int main() {
     tache4.ajouteDependance(tache2);
     tache5.ajouteDependance(tache4);
 
-    tache3 = Tache(tache5);
+    tache3 = tache5;
+	assert( tache3.depends_from(tache1) && tache3.depends_from(tache2) &&tache3.depends_from(tache4));
+	assert(tache5.depends_from(tache1) && tache5.depends_from(tache2) && tache5.depends_from(tache4));
 	assert(tache5.dureeParal() == tache3.dureeParal());
 
     return 0;

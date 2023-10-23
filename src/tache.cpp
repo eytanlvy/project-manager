@@ -11,11 +11,14 @@ Tache::Tache(const Tache& other): nom(other.nom), id(other.id), duree(other.dure
 {
     cout << "Copie de : " << *this << endl;
     dependances.clear();
-    for (Tache* dep : other.dependances)
+
+    for (Tache* const &dep : other.dependances)
+	{
         dependances.push_back(new Tache(*dep));
+	}
 }
 
-Tache& Tache::operator=(const Tache& other)
+const Tache& Tache::operator=(const Tache& other)
 {
     if (this == &other)
         return *this;
@@ -26,9 +29,10 @@ Tache& Tache::operator=(const Tache& other)
     realisee = other.realisee;
 
     dependances.clear();
-    for (Tache* dep : other.dependances)
-        this->ajouteDependance(*dep);
-
+    for (Tache* const &dep : other.dependances)
+	{
+		dependances.push_back(new Tache(*dep));
+	}
     return (*this);
 }
 
@@ -85,7 +89,7 @@ bool Tache::depends_from(Tache & x)
 {
 	int i{0};
     if (id == x.getId())
-        return (true);
+		return (true);
 	while (i < dependances.size())
 	{
 		if (dependances[i]->getId() == x.getId() || dependances[i]->depends_from(x))
@@ -109,10 +113,32 @@ int Tache::dureeParal()
 	int i{0}, maxi{duree};
 	while (i < dependances.size())
 	{
-		maxi = max(dependances[i]->dureeParal(), maxi);
+		if (!dependances[i]->getRealisee())
+			maxi = max(dependances[i]->dureeParal(), maxi);
 		i++;
 	}
 	return (max(duree, maxi));
+}
+
+const bool Tache::is_marked() const
+{
+	return (marked);
+}
+
+void Tache::mark(bool value)
+{
+	marked = value;
+}
+
+void Tache::PP_postfixe(vector<Tache*>& sortedTasks)
+{
+    marked = true;
+    for (Tache* dep : dependances)
+    {
+        if (!dep->marked)
+            dep->PP_postfixe(sortedTasks);
+    }
+    sortedTasks.push_back(this);
 }
 
 
