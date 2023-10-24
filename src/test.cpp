@@ -1,4 +1,4 @@
-#include "../includes/utils/error_management.hpp"
+#include "../includes/error_management.hpp"
 #include <iostream>
 #include <stdlib.h>
 
@@ -40,6 +40,6 @@ bool test_taches(bool debug) {
 
 int main(void) {
     test_taches(false);
-    std::cout << "Test successfull" << std::endl;
+    //Debug::print << "Test successfull" << std::endl;
     return EXIT_SUCCESS;
 }

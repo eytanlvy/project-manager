@@ -5,7 +5,7 @@ using namespace std;
 
 Projet::Projet()
 {
-	cout << "Naissance de : " << *this << endl;
+	//Debug::print << "Naissance de : " << *this << endl;
 }
 
 Projet::Projet(const Projet& other)
@@ -34,7 +34,7 @@ Projet::~Projet()
 	for (Tache* tache : taches) {
 		delete tache;
 	}
-	cout << "Cellule détruite: " << *this << endl;
+	//Debug::print << "Cellule détruite: " << *this << endl;
 }
 
 ostream& operator<<( ostream &out , const Projet &x )

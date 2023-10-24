@@ -16,4 +16,5 @@ public:
     
     static Debug print;
 };
+
 #endif

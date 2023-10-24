@@ -1,5 +1,5 @@
 #include "../includes/tache.hpp"
-#include "../includes/utils/debug.hpp"
+#include "../includes/debug.hpp"
 
 using namespace std;
 
@@ -7,14 +7,12 @@ int Tache::lastId = 0;
 
 Tache::Tache(const string& nom, int duree) : nom(nom), id(++lastId), duree(duree), realisee(false)
 {
-	//Debug::log("test"); #TODO
-	//Debug::print << "test\n";
-	std::cout << "Naissance de : " << *this << "\n";
+	//Debug::print << "Naissance de : " << *this << "\n";
 }
 
 Tache::Tache(const Tache& other): nom(other.nom), id(other.id), duree(other.duree), realisee(other.realisee)
 {
-    cout << "Copie de : " << *this << endl;
+    //Debug::print << "Copie de : " << *this << endl;
     dependances.clear();
 
     for (Tache* const &dep : other.dependances)
@@ -46,7 +44,7 @@ Tache::~Tache()
     dependances.clear();
     for (Tache* tache : dependances)
 		delete tache;
-	cout << "Cellule détruite: " << *this << endl;
+	//Debug::print << "Cellule détruite: " << *this << endl;
 }
 
 // Getters
