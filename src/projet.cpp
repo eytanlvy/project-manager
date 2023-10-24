@@ -74,13 +74,9 @@ Tache* Projet::contains (int id)
 void Projet::topological_sort()
 {
 	cleanMarks();
-
     vector<Tache*> sortedTasks;
-
-    // Parcourir toutes les tâches du projet
     for (Tache* task : taches)
     {
-        // Si la tâche n'est pas marquée, commencez un parcours en profondeur postfixe
         if (!task->is_marked())
         {
             task->PP_postfixe(sortedTasks);

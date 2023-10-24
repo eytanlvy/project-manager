@@ -8,7 +8,7 @@ class ProtoProjet : public Projet {
 		ProtoProjet();
 		bool ajoute (const string nom, const int duree);
 		bool ajoute (const string nom, const int duree, const int tacheid);
-		bool ajoute (const string nom, const int duree, const int tache1, const int tache2); //TODO
+		bool ajoute (const string nom, const int duree, const int tache1, const int tache2); //todo
 };
 
 #endif
