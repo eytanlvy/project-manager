@@ -16,9 +16,7 @@ Tache::Tache(const Tache& other): nom(other.nom), id(other.id), duree(other.dure
     dependances.clear();
 
     for (Tache* const &dep : other.dependances)
-	{
         dependances.push_back(new Tache(*dep));
-	}
 }
 
 const Tache& Tache::operator=(const Tache& other)
@@ -33,9 +31,7 @@ const Tache& Tache::operator=(const Tache& other)
 
     dependances.clear();
     for (Tache* const &dep : other.dependances)
-	{
 		dependances.push_back(new Tache(*dep));
-	}
     return (*this);
 }
 
@@ -75,14 +71,15 @@ vector<Tache*> const Tache::getDependances() const
 
 //Methods
 
-bool Tache::realise() // safe process
-{
+bool Tache::realisable() {
 	for (Tache *dependency: this->getDependances())
-		if (!dependency->getRealisee())
-			return false;
-	this->realisee = true;
-
+			if (!dependency->getRealisee())
+				return false;
 	return true;
+}
+
+bool Tache::realise() { // safe process
+	return (this->realisee = this->realisable());
 }
 
 void Tache::realise_cascade() {

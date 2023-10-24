@@ -4,12 +4,9 @@
 
 #include "../includes/tache.hpp"
 
-/*
-    Test must return true if they fail, false otherwise
-*/
+void test_taches() {
+    std::cout << "Test 1: Tâches et dépendances" << std::endl;
 
-bool test_taches(bool debug) {
-    // Test 1: Tâches et dépendances
     Tache tache1("Tache1", 3);
     Tache tache2("Tache2", 2);
     Tache tache3("Tache3", 4);
@@ -34,12 +31,11 @@ bool test_taches(bool debug) {
 	assert(tache3.depends_from(tache1) && tache3.depends_from(tache2) &&tache3.depends_from(tache4));
 	assert(tache5.depends_from(tache1) && tache5.depends_from(tache2) && tache5.depends_from(tache4));
 	assert(tache5.dureeParal() == tache3.dureeParal());
-    
-    return false;
 }
 
 int main(void) {
-    test_taches(false);
-    //Debug::print << "Test successfull" << std::endl;
+    test_taches();
+    
+    std::cout << "Test were successfull!" << std::endl;
     return EXIT_SUCCESS;
 }
