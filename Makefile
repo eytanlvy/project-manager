@@ -1,17 +1,15 @@
 CPP = g++
-CPPFLAGS = -std=c++11 -Wall -Wno-sign-compare
+CPPFLAGS = -std=c++11 -Wall -Wno-sign-compare -DDEBUG_ENABLED
 SRCDIR = src
 INCDIR = includes
 OBJDIR = obj
-INCDIR = utils
+VPATH = $(SRCDIR):$(SRCDIR)/utils1:$(SRCDIR)/utils2
+INCLUDES = -I$(INCDIR)
 
-# Liste de tous les fichiers sources dans le répertoire src
-SRCS = $(wildcard $(SRCDIR)/*.cpp) 
+SRCS = $(wildcard $(SRCDIR)/*.cpp) $(wildcard $(SRCDIR)/utils1/*.cpp) $(wildcard $(SRCDIR)/utils2/*.cpp)
 
-# Génération de la liste des fichiers objets
 OBJS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SRCS))
 
-# Nom de l'exécutable
 TARGET = run
 
 all: $(TARGET)
@@ -19,9 +17,9 @@ all: $(TARGET)
 $(TARGET): $(OBJS)
 	$(CPP) -o $@ $^
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+$(OBJDIR)/%.o: %.cpp
 	@if [ ! -d $(OBJDIR) ]; then mkdir -p $(OBJDIR); fi
-	$(CPP) $(CPPFLAGS) -I$(INCDIR) -c $< -o $@
+	$(CPP) $(CPPFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	rm -rf $(OBJDIR)

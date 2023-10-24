@@ -20,7 +20,9 @@ class Tache
 	public:
 		Tache(const std::string& nom, int duree);
 		Tache(const Tache& other);
+		virtual ~Tache();
 		const Tache& operator=(const Tache& other);
+
 		std::string const getNom() const;
 		int const getId() const;
 		int const getDuree() const;
@@ -31,7 +33,6 @@ class Tache
 		bool depends_from(Tache & x);
 		bool ajouteDependance(Tache & x);
 		int dureeParal();
-		virtual ~Tache();
 
 		const bool is_marked() const;
 		void mark(bool value);

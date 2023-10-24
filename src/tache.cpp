@@ -1,4 +1,5 @@
-# include "../includes/tache.hpp"
+#include "../includes/tache.hpp"
+#include "../includes/utils/debug.hpp"
 
 using namespace std;
 
@@ -6,7 +7,9 @@ int Tache::lastId = 0;
 
 Tache::Tache(const string& nom, int duree) : nom(nom), id(++lastId), duree(duree), realisee(false)
 {
-	cout << "Naissance de : " << *this << endl;
+	//Debug::log("test"); #TODO
+	//Debug::print << "test\n";
+	std::cout << "Naissance de : " << *this << "\n";
 }
 
 Tache::Tache(const Tache& other): nom(other.nom), id(other.id), duree(other.duree), realisee(other.realisee)
