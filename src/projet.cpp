@@ -1,4 +1,5 @@
-# include "../includes/projet.hpp"
+#include "../includes/projet.hpp"
+#include <stdexcept>
 
 using namespace std;
 
@@ -34,6 +35,25 @@ Projet::~Projet()
 		delete tache;
 	}
 	cout << "Cellule détruite: " << *this << endl;
+}
+
+ostream& operator<<( ostream &out , const Projet &x )
+{
+	vector <Tache*> gtaches {x.consult_tasks()};
+	for (int i {0}; i < gtaches.size() - 1; i++) {
+		out << *gtaches[i] << ", ";
+	}
+	out << endl;
+	return out;
+}
+
+Tache *Projet::get_task(const int task_id) {
+	for (Tache *task : this->taches)
+		if (task->getId() == task_id)
+			return task;
+	
+	throw std::invalid_argument("This task id doesn't exist.");
+	return nullptr;
 }
 
 vector<Tache*> const Projet::consult_tasks() const
@@ -95,13 +115,4 @@ void Projet::cleanMarks()
 {
     for (Tache* task : taches)
         task->mark(0);
-}
-ostream& operator<<( ostream &out , const Projet &x )
-{
-	vector <Tache*> gtaches {x.consult_tasks()};
-	for (int i {0}; i < gtaches.size() - 1; i++) {
-		out << *gtaches[i] << ", ";
-	}
-	out << endl;
-	return out;
 }
