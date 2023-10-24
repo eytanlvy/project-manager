@@ -15,7 +15,6 @@ void ProtoProjet::unsafe_hard_reset() {
 ProtoProjet::ProtoProjet()
 {
     unsafe_hard_reset();
-	
 }
 
 bool ProtoProjet::ajoute(const string nom, const int duree) {

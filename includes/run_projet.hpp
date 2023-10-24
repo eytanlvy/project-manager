@@ -7,7 +7,7 @@
 
 class RunProjet : public Projet {
 	private:
-		void run(const Tache *tache);
+		void run(Tache *tache);
 		void run(std::vector<Tache*> taches);
 	public:
 		RunProjet(ProtoProjet proto_projet);

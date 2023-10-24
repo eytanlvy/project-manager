@@ -74,17 +74,24 @@ vector<Tache*> const Tache::getDependances() const
 
 //Methods
 
-bool Tache::realise()
+bool Tache::realise() // safe process
 {
-	int i{0};
-	while (i < dependances.size())
-	{
-		if (!dependances[i]->getRealisee())
-			return (false);
-		i++;
-	}
-	realisee = true;
-	return (true);
+	for (Tache *dependency: this->getDependances())
+		if (!dependency->getRealisee())
+			return false;
+	this->realisee = true;
+
+	return true;
+}
+
+void Tache::realise_cascade() {
+	if (this->realisee)
+		return;
+
+	for (Tache *dependency: this->getDependances())
+        dependency->realise_cascade();
+
+	this->realisee = true;
 }
 
 bool Tache::depends_from(Tache & x)

@@ -27,6 +27,7 @@ class Tache
 		bool const getRealisee() const;
 		std::vector<Tache*> const getDependances() const;
 		bool realise();
+		void realise_cascade();
 		bool depends_from(Tache & x);
 		bool ajouteDependance(Tache & x);
 		int dureeParal();

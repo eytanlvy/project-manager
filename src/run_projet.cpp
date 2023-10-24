@@ -8,8 +8,8 @@ RunProjet::RunProjet(ProtoProjet proto_projet) {
     proto_projet.unsafe_hard_reset();
 };
 
-void RunProjet::run(const Tache *tache) {
-    throw NotImplemented(); // TODO
+void RunProjet::run(Tache *tache) {
+    tache->realise_cascade();
 }
 
 void RunProjet::run(std::vector<Tache *> taches) {
