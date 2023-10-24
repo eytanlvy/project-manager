@@ -90,6 +90,7 @@ void Projet::cleanMarks()
     for (Tache* task : taches)
         task->mark(0);
 }
+
 ostream& operator<<( ostream &out , const Projet &x )
 {
 	vector <Tache*> gtaches {x.consult_tasks()};
@@ -98,34 +99,4 @@ ostream& operator<<( ostream &out , const Projet &x )
 	}
 	out << endl;
 	return out;
-}
-
-int main() {
-    // Test 1: Tâches et dépendances
-    Tache tache1("Tache1", 3);
-    Tache tache2("Tache2", 2);
-    Tache tache3("Tache3", 4);
-
-    tache1.ajouteDependance(tache2);
-    tache1.ajouteDependance(tache3);
-    tache2.ajouteDependance(tache3);
-
-	assert(tache1.depends_from(tache2));
-	assert(!tache2.depends_from(tache1));
-	assert(tache2.depends_from(tache3));
-	assert(!tache3.depends_from(tache1));
-
-    Tache tache4("Tache4", 2);
-    Tache tache5("Tache5", 1);
-
-    tache4.ajouteDependance(tache1);
-    tache4.ajouteDependance(tache2);
-    tache5.ajouteDependance(tache4);
-
-    tache3 = tache5;
-	assert( tache3.depends_from(tache1) && tache3.depends_from(tache2) &&tache3.depends_from(tache4));
-	assert(tache5.depends_from(tache1) && tache5.depends_from(tache2) && tache5.depends_from(tache4));
-	assert(tache5.dureeParal() == tache3.dureeParal());
-
-    return 0;
 }
