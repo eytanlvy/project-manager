@@ -1,5 +1,8 @@
 # include "../includes/proto_projet.hpp"
 
+using namespace std;
+
+
 ProtoProjet::ProtoProjet()
 {
 	Tache* debut = new Tache("Debut", 0);

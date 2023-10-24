@@ -1,5 +1,7 @@
 # include "../includes/projet.hpp"
 
+using namespace std;
+
 Projet::Projet()
 {
 	cout << "Naissance de : " << *this << endl;
