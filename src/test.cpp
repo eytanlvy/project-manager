@@ -2,74 +2,74 @@
 #include <iostream>
 #include <stdlib.h>
 
-#include "../includes/tache.hpp"
-#include "../includes/proto_projet.hpp"
+#include "../includes/task.hpp"
+#include "../includes/proto_project.hpp"
 #include "../includes/debug.hpp"
 
-void test_taches() {
+void test_tasks() {
     std::cout << "Test 1: Tâches et dépendances" << std::endl;
 
-    Tache tache1("Tache1", 3);
-    Tache tache2("Tache2", 2);
-    Tache tache3("Tache3", 4);
+    Task task1("task1", 3);
+    Task task2("task2", 2);
+    Task task3("task3", 4);
 
-    tache1.ajouteDependance(tache2);
-    tache1.ajouteDependance(tache3);
-    tache2.ajouteDependance(tache3);
+    task1.addDependency(task2);
+    task1.addDependency(task3);
+    task2.addDependency(task3);
 
-	assert(tache1.depends_from(tache2));
-	assert(!tache2.depends_from(tache1));
-	assert(tache2.depends_from(tache3));
-	assert(!tache3.depends_from(tache1));
+	assert(task1.depends_from(task2));
+	assert(!task2.depends_from(task1));
+	assert(task2.depends_from(task3));
+	assert(!task3.depends_from(task1));
 
-    Tache tache4("Tache4", 2);
-    Tache tache5("Tache5", 1);
+    Task task4("task4", 2);
+    Task task5("task5", 1);
 
-    tache4.ajouteDependance(tache1);
-    tache4.ajouteDependance(tache2);
-    tache5.ajouteDependance(tache4);
+    task4.addDependency(task1);
+    task4.addDependency(task2);
+    task5.addDependency(task4);
 
-    tache3 = tache5;
-	assert(tache3.depends_from(tache1) && tache3.depends_from(tache2) &&tache3.depends_from(tache4));
-	assert(tache5.depends_from(tache1) && tache5.depends_from(tache2) && tache5.depends_from(tache4));
-	assert(tache5.dureeParal() == tache3.dureeParal());
+    task3 = task5;
+	assert(task3.depends_from(task1) && task3.depends_from(task2) &&task3.depends_from(task4));
+	assert(task5.depends_from(task1) && task5.depends_from(task2) && task5.depends_from(task4));
+	assert(task5.durationParallelized() == task3.durationParallelized());
 }
 
 void test_proto()
 {
-    std::cout << "Test 2: ProtoProjet" << std::endl;
-    ProtoProjet protoProjet;
-    for (Tache* tache : protoProjet.consult_tasks()) {
-        std::cout << *tache << std::endl;
+    std::cout << "Test 2: ProtoProject" << std::endl;
+    ProtoProject protoProject;
+    for (Task* task : protoProject.consult_tasks()) {
+        std::cout << *task << std::endl;
     }
 
-    protoProjet.ajoute("Tache A", 3);
-    protoProjet.ajoute("Tache B", 2);
-    protoProjet.ajoute("Tache C", 4);
+    protoProject.add("Tache A", 3);
+    protoProject.add("Tache B", 2);
+    protoProject.add("Tache C", 4);
 
-    std::cout << "ProtoProjet après ajout de tâches aléatoires:" << std::endl;
-    for (Tache* tache : protoProjet.consult_tasks()) {
-        std::cout << *tache << std::endl;
+    std::cout << "ProtoProject après ajout de tâches aléatoires:" << std::endl;
+    for (Task* task : protoProject.consult_tasks()) {
+        std::cout << *task << std::endl;
     }
 
-    protoProjet.ajoute("Tache D", 5, 8); 
+    protoProject.add("Tache D", 5, 8); 
 
-    std::cout << "ProtoProjet après ajout de Tache D:" << std::endl;
-    for (Tache* tache : protoProjet.consult_tasks()) {
-        std::cout << *tache << std::endl;
+    std::cout << "ProtoProject après ajout de Tache D:" << std::endl;
+    for (Task* task : protoProject.consult_tasks()) {
+        std::cout << *task << std::endl;
     }
 
-    protoProjet.ajoute("Tache E", 2, 11, 10); 
+    protoProject.add("Tache E", 2, 11, 10); 
 
-    std::cout << "ProtoProjet après ajout de Tache E:" << std::endl;
-    for (Tache* tache : protoProjet.consult_tasks()) {
-        std::cout << *tache << std::endl;
+    std::cout << "ProtoProject après ajout de Tache E:" << std::endl;
+    for (Task* task : protoProject.consult_tasks()) {
+        std::cout << *task << std::endl;
     }
 
 }
 
 int main(void) {
-    test_taches();
+    test_tasks();
     test_proto();
     
     std::cout << "Tests were successfull!" << std::endl;
