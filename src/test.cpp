@@ -1,14 +1,16 @@
 #include "../includes/error_management.hpp"
 #include <iostream>
 #include <stdlib.h>
+#include <cstdlib>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 #include "../includes/task.hpp"
 #include "../includes/proto_project.hpp"
 #include "../includes/debug.hpp"
 
 void test_tasks() {
-    std::cout << "Test 1: Tasks and dependencies" << std::endl;
-
     Task task1("task1", 3);
     Task task2("task2", 2);
     Task task3("task3", 4);
@@ -35,9 +37,8 @@ void test_tasks() {
 	assert(task5.durationParallelized() == task3.durationParallelized());
 }
 
-void test_proto()
-{
-    std::cout << "Test 2: ProtoProject" << std::endl;
+void test_proto() {
+    test_tasks(); // test non indépendant ?
     ProtoProject protoProject;
 
     protoProject.add("Task D", 5, 6); 
@@ -57,10 +58,43 @@ void test_proto()
     assert(protoProject.consult_tasks().size() == 7);
 }
 
+
+bool test_a_function(void (*functionToTest)()) {
+    pid_t child_pid = fork();
+
+    if (child_pid == 0) {
+        functionToTest();
+        exit(0);
+    }
+
+    int status;
+    waitpid(child_pid, &status, 0);
+    return WIFEXITED(status) && (WEXITSTATUS(status) == 0);
+}
+
 int main(void) {
-    test_tasks();
-    test_proto();
+    std::vector<std::pair<void (*)(), std::string>> test_functions{
+        std::pair<void (*)(), std::string>{test_tasks, "Tasks and dependencies"}, 
+        std::pair<void (*)(), std::string>{test_proto, "ProtoProject"}
+        };
+
+    int successfull = 0;
+    for (int i = 0; i < test_functions.size(); i++) {
+        std::cout << "Test " << std::to_string(i) << ": " 
+            << test_functions[i].second << " \t| " << std::flush;
+        
+        if (test_a_function(test_functions[i].first)) {
+            std::cout << "checked";
+            successfull++;
+        } else std::cout << "not checked";
+        std::cout << std::endl;
+    }
     
-    std::cout << "Tests were successfull!" << std::endl;
+    std::cout << "\n" << std::to_string(successfull) << "/" << 
+        std::to_string(test_functions.size()) << 
+        " tests were successfull!" << std::endl;
+    if (successfull != test_functions.size())
+        return EXIT_FAILURE;
+    
     return EXIT_SUCCESS;
 }
