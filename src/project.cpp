@@ -29,8 +29,6 @@ Task *Project::get_task(const int task_id) {
 	for (Task *task : this->tasks)
 		if (task->getId() == task_id)
 			return task;
-	
-	throw std::invalid_argument("This task id doesn't exist.");
 	return nullptr;
 }
 

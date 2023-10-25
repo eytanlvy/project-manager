@@ -23,7 +23,7 @@ ProtoProject::ProtoProject(const ProtoProject& other) {
         tasks.push_back(new Task(*task));
 }
 
-bool ProtoProject::add(const string nom, const int duree) {
+bool ProtoProject::add(const string name, const int duration) {
     srand(time(NULL));
     int i = rand() % tasks.size();
     int j = rand() % tasks.size();
@@ -33,7 +33,7 @@ bool ProtoProject::add(const string nom, const int duree) {
     }
     if (j < i) std::swap(i, j);
 
-    Task* t = new Task(nom, duree);
+    Task* t = new Task(name, duration);
     Task* t1 = tasks[i];
     Task* t2 = tasks[j];
 
@@ -44,32 +44,25 @@ bool ProtoProject::add(const string nom, const int duree) {
     return (true);
 }
 
-bool ProtoProject::add(const string nom, const int duree, const int task_id)
+bool ProtoProject::add(const string name, const int duration, const int task_id)
 {
-	int i = 0;
-	while (i < tasks.size()){
-		if (tasks[i]->getId() == task_id)
-			break;
-		i++;
-	}
-	if (i == tasks.size() || i == 0)
-		return (false);
-	
-    Task* t = new Task(nom, duree);
-    Task* t1 = tasks[0];
-    Task* t2 = tasks[i];
+    Task *task_before = get_task(task_id);
+    if (task_before == tasks.front())
+        return false;
+        
+    Task* the_new_task = new Task(name, duration);
+    the_new_task->addDependency(*tasks.back());
+    tasks.front()->addDependency(*the_new_task);
 
-    t1->addDependency(*t);
-    t->addDependency(*t2);
-    tasks.insert(tasks.begin() + i, t);
 	topological_sort();
-    return (true);
+    return true;
 }
 
-bool ProtoProject::add(const string nom, const int duree, const int task1, const int task2)
-{
-    int i = -1;
-    int j = -1;
+bool ProtoProject::add(const string name, const int duration, const int task1, const int task2) {
+    if (task1 == task2)
+        return false;
+
+    int i{-1}, j{-1};
 
     for (int k = 0; k < tasks.size(); k++){
         if (tasks[k]->getId() == task1)
@@ -77,16 +70,20 @@ bool ProtoProject::add(const string nom, const int duree, const int task1, const
         if (tasks[k]->getId() == task2)
             j = k;
     }
+
     if (i == -1 || j == -1)
         return (false);
-    if (j < i) std::swap(i, j);
-    Task* t = new Task(nom, duree);
-    Task* t1 = tasks[i];
-    Task* t2 = tasks[j];
+    
+    if (j < i) std::swap(i, j); // i doit être inferieur à j
+    
+    Task* new_task = new Task(name, duration);
+    Task* task_after = tasks[i];
+    Task* task_before = tasks[j];
 
-    t1->addDependency(*t);
-    t->addDependency(*t2);
-    tasks.insert(tasks.begin() + j, t);
+    new_task->addDependency(*task_before);
+    task_after->addDependency(*new_task);
+    tasks.push_back(new_task);
+
 	topological_sort();
     return (true);
 }

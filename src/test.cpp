@@ -39,7 +39,7 @@ void test_proto() {
     ProtoProject protoProject;
 
     protoProject.add("Task D", 5, 6); 
-    assert(protoProject.consult_tasks()[1]->getId() == 8);  
+    assert(protoProject.consult_tasks()[1]->getId() == 8);
 
     protoProject.add("Task E", 2, 8, 6); 
     assert(protoProject.consult_tasks()[2]->getId() == 9);
@@ -76,6 +76,23 @@ void test_run() {
 }
 
 
+void test_cascade() {
+    std::vector<int> tasks;
+    ProtoProject protoProject;
+
+    for (int i = 0; i < 6; i++) {
+        char current_char = (char)((int)'A' + i);
+        std::string current_name = "Task " + std::to_string(current_char);
+        
+        protoProject.add(current_name, 1, i);
+        tasks.push_back(i);
+    }
+
+    RunProject runProject{protoProject};
+    int final_task_id = runProject.consult_tasks().front()->getId();
+    runProject.run(final_task_id);
+}
+
 
 bool test_a_function(void (*functionToTest)()) {
     pid_t child_pid = fork();
@@ -94,7 +111,8 @@ int main(void) {
     std::vector<std::pair<void (*)(), std::string>> test_functions{
         std::pair<void (*)(), std::string>{test_tasks, "Tasks and dependencies"}, 
         std::pair<void (*)(), std::string>{test_proto, "ProtoProject"},
-        std::pair<void (*)(), std::string>{test_run, "RunProject"}
+        std::pair<void (*)(), std::string>{test_run, "RunProject"},
+        std::pair<void (*)(), std::string>{test_cascade, "RunProject cascade"}
         };
 
     int successfull = 0;
