@@ -8,6 +8,7 @@
 
 #include "../includes/task.hpp"
 #include "../includes/proto_project.hpp"
+#include "../includes/run_project.hpp"
 #include "../includes/debug.hpp"
 
 void test_tasks() {
@@ -53,7 +54,27 @@ void test_proto() {
     protoProject.add("Task G", 1, 5);
     assert(protoProject.consult_tasks().size() == 7);
 
+    ProtoProject protoProject2(protoProject);
+    for (int i = 0; i < protoProject.consult_tasks().size(); i++)
+        assert(protoProject.consult_tasks()[i]->getId() == protoProject2.consult_tasks()[i]->getId());
+
 }
+
+void test_run() {
+    
+    ProtoProject protoProject;
+    protoProject.add("Task A", 3);
+    protoProject.add("Task B", 2);
+    protoProject.add("Task C", 4);
+    
+    RunProject runProject(protoProject);
+    
+    std::vector<Task*> tasks = runProject.consult_tasks();
+    assert(tasks.size() == 5);
+    
+    //Tests for run() methods
+}
+
 
 
 bool test_a_function(void (*functionToTest)()) {
@@ -72,7 +93,8 @@ bool test_a_function(void (*functionToTest)()) {
 int main(void) {
     std::vector<std::pair<void (*)(), std::string>> test_functions{
         std::pair<void (*)(), std::string>{test_tasks, "Tasks and dependencies"}, 
-        std::pair<void (*)(), std::string>{test_proto, "ProtoProject"}
+        std::pair<void (*)(), std::string>{test_proto, "ProtoProject"},
+        std::pair<void (*)(), std::string>{test_run, "RunProject"}
         };
 
     int successfull = 0;

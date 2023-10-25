@@ -19,7 +19,7 @@ Project::~Project()
 
 ostream& operator<<( ostream &out , const Project &x ) {
 	vector <Task*> gtaches {x.consult_tasks()};
-	for (int i {0}; i < gtaches.size() - 1; i++)
+	for (int i {0}; i < gtaches.size(); i++)
 		out << *gtaches[i] << ", ";
 	out << endl;
 	return out;
@@ -65,7 +65,7 @@ Task* Project::contains (int id) {
 
 void Project::topological_sort() {
 	cleanMarks();
-	
+
     vector<Task*> sortedTasks;
 
     for (Task* task : tasks)
