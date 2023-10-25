@@ -11,9 +11,9 @@ class ProtoProject : public Project {
 		void unsafe_hard_reset();
 	public:
 		ProtoProject();
-		bool ajoute (const std::string name, const int duration);
-		bool ajoute (const std::string name, const int duration, const int task_id);
-		bool ajoute (const std::string name, const int duration, const int task_1, const int task_2);
+		bool add (const std::string name, const int duration);
+		bool add (const std::string name, const int duration, const int task_id);
+		bool add (const std::string name, const int duration, const int task_1, const int task_2);
 };
 
 #endif
