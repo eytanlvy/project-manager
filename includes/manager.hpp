@@ -8,7 +8,7 @@
 
 class Manager {
     public:
-        virtual std::pair<std::vector<int>, int> review(const RunProject &);
+        virtual std::pair<std::vector<int>, int> review(const RunProject & project);
 };
 
 #endif
