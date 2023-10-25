@@ -2,40 +2,40 @@
 #include <iostream>
 #include <stdlib.h>
 
-#include "../includes/tache.hpp"
+#include "../includes/task.hpp"
+#include "../includes/debug.hpp"
 
-void test_taches() {
+void test_tasks() {
     std::cout << "Test 1: Tâches et dépendances" << std::endl;
 
-    Tache tache1("Tache1", 3);
-    Tache tache2("Tache2", 2);
-    Tache tache3("Tache3", 4);
+    Task task1("task1", 3);
+    Task task2("task2", 2);
+    Task task3("task3", 4);
 
-    tache1.ajouteDependance(tache2);
-    tache1.ajouteDependance(tache3);
-    tache2.ajouteDependance(tache3);
+    task1.addDependency(task2);
+    task1.addDependency(task3);
+    task2.addDependency(task3);
 
-	assert(tache1.depends_from(tache2));
-	assert(!tache2.depends_from(tache1));
-	assert(tache2.depends_from(tache3));
-	assert(!tache3.depends_from(tache1));
+	assert(task1.depends_from(task2));
+	assert(!task2.depends_from(task1));
+	assert(task2.depends_from(task3));
+	assert(!task3.depends_from(task1));
 
-    Tache tache4("Tache4", 2);
-    Tache tache5("Tache5", 1);
+    Task task4("task4", 2);
+    Task task5("task5", 1);
 
-    tache4.ajouteDependance(tache1);
-    tache4.ajouteDependance(tache2);
-    tache5.ajouteDependance(tache4);
+    task4.addDependency(task1);
+    task4.addDependency(task2);
+    task5.addDependency(task4);
 
-    tache3 = tache5;
-	assert(tache3.depends_from(tache1) && tache3.depends_from(tache2) &&tache3.depends_from(tache4));
-	assert(tache5.depends_from(tache1) && tache5.depends_from(tache2) && tache5.depends_from(tache4));
-	assert(tache5.dureeParal() == tache3.dureeParal());
+    task3 = task5;
+	assert(task3.depends_from(task1) && task3.depends_from(task2) &&task3.depends_from(task4));
+	assert(task5.depends_from(task1) && task5.depends_from(task2) && task5.depends_from(task4));
+	assert(task5.durationParallalised() == task3.durationParallalised());
 }
 
 int main(void) {
-    test_taches();
-    
+    test_tasks();
     std::cout << "Test were successfull!" << std::endl;
     return EXIT_SUCCESS;
 }

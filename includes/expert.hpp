@@ -5,7 +5,7 @@
 
 class Expert : public Gestionnaire {
     public:
-        std::pair<std::vector<int>, int> avis(const RunProjet &);
+        std::pair<std::vector<int>, int> avis(const RunProject &);
 };
 
 #endif
