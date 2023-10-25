@@ -55,6 +55,9 @@ void test_proto()
     protoProject.add("Task F", 2, 0, 6);
     protoProject.add("Task G", 1, 5);
     assert(protoProject.consult_tasks().size() == 7);
+
+    for (Task *task: protoProject.consult_tasks())
+        Debug::log(*task);
 }
 
 int main(void) {
