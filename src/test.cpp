@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "../includes/tache.hpp"
+#include "../includes/proto_projet.hpp"
 
 void test_taches() {
     std::cout << "Test 1: Tâches et dépendances" << std::endl;
@@ -33,9 +34,43 @@ void test_taches() {
 	assert(tache5.dureeParal() == tache3.dureeParal());
 }
 
+void test_proto()
+{
+    std::cout << "Test 2: ProtoProjet" << std::endl;
+    ProtoProjet protoProjet;
+    for (Tache* tache : protoProjet.consult_tasks()) {
+        std::cout << *tache << std::endl;
+    }
+
+    protoProjet.ajoute("Tache A", 3);
+    protoProjet.ajoute("Tache B", 2);
+    protoProjet.ajoute("Tache C", 4);
+
+    std::cout << "ProtoProjet après ajout de tâches aléatoires:" << std::endl;
+    for (Tache* tache : protoProjet.consult_tasks()) {
+        std::cout << *tache << std::endl;
+    }
+
+    protoProjet.ajoute("Tache D", 5, 2); 
+
+    std::cout << "ProtoProjet après ajout de Tache D:" << std::endl;
+    for (Tache* tache : protoProjet.consult_tasks()) {
+        std::cout << *tache << std::endl;
+    }
+
+    protoProjet.ajoute("Tache E", 2, 1, 3); 
+
+    std::cout << "ProtoProjet après ajout de Tache E:" << std::endl;
+    for (Tache* tache : protoProjet.consult_tasks()) {
+        std::cout << *tache << std::endl;
+    }
+
+}
+
 int main(void) {
     test_taches();
+    test_proto();
     
-    std::cout << "Test were successfull!" << std::endl;
+    std::cout << "Tests were successfull!" << std::endl;
     return EXIT_SUCCESS;
 }

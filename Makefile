@@ -24,4 +24,4 @@ clean_obj:
 clean: clean_obj
 	rm -f $(TARGET)
 
-re: fclean all
+re: clean all

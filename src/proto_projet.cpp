@@ -1,4 +1,5 @@
 # include "../includes/proto_projet.hpp"
+# include "../includes/debug.hpp"
 
 using namespace std;
 
@@ -25,6 +26,7 @@ bool ProtoProjet::ajoute(const string nom, const int duree) {
     }
 
 	i = i < j ? i : j;
+    Debug::log("i: " + std::to_string(i) + " j:" + std::to_string(j));
     Tache* t = new Tache(nom, duree);
     Tache* t1 = taches[i];
     Tache* t2 = taches[j];
@@ -84,61 +86,4 @@ bool ProtoProjet::ajoute(const string nom, const int duree, const int tache1, co
         taches.insert(taches.begin() + i, t);
 	topological_sort();
     return (true);
-}
-
-int main() {
-    // Test 1: Tâches et dépendances
-    Tache tache1("Tache1", 3);
-    Tache tache2("Tache2", 2);
-    Tache tache3("Tache3", 4);
-
-    tache1.ajouteDependance(tache2);
-    tache1.ajouteDependance(tache3);
-    tache2.ajouteDependance(tache3);
-
-	assert(tache1.depends_from(tache2));
-	assert(!tache2.depends_from(tache1));
-	assert(tache2.depends_from(tache3));
-	assert(!tache3.depends_from(tache1));
-
-    Tache tache4("Tache4", 2);
-    Tache tache5("Tache5", 1);
-
-    tache4.ajouteDependance(tache1);
-    tache4.ajouteDependance(tache2);
-    tache5.ajouteDependance(tache4);
-
-    tache3 = tache5;
-	assert( tache3.depends_from(tache1) && tache3.depends_from(tache2) &&tache3.depends_from(tache4));
-	assert(tache5.depends_from(tache1) && tache5.depends_from(tache2) && tache5.depends_from(tache4));
-	assert(tache5.dureeParal() == tache3.dureeParal());
-
-    cout<<"APAGNAN"<<endl;
-
-	ProtoProjet protoProjet{};
-    cout << "ProtoProjet initial:" << endl;
-
-    protoProjet.ajoute("Tache A", 3);
-    protoProjet.ajoute("Tache B", 2);
-    protoProjet.ajoute("Tache C", 4);
-
-    cout << "ProtoProjet après ajout de tâches aléatoires:" << endl;
-    for (Tache* tache : protoProjet.consult_tasks()) {
-        cout << *tache << endl;
-    }
-
-    protoProjet.ajoute("Tache D", 5, 2);
-
-    cout << "ProtoProjet après ajout de Tache D:" << endl;
-    for (Tache* tache : protoProjet.consult_tasks()) {
-        cout << *tache << endl;
-    }
-
-    protoProjet.ajoute("Tache E", 2, 1, 3);
-
-    cout << "ProtoProjet après ajout de Tache E:" << endl;
-    for (Tache* tache : protoProjet.consult_tasks()) {
-        cout << *tache << endl;
-	}
-    return 0;
 }
