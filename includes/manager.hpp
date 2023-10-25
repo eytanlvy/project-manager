@@ -6,9 +6,9 @@
 #include <vector>
 #include <cstdlib>
 
-class Gestionnaire {
+class Manager {
     public:
-        virtual std::pair<std::vector<int>, int> avis(const RunProject &);
+        virtual std::pair<std::vector<int>, int> review(const RunProject &);
 };
 
 #endif

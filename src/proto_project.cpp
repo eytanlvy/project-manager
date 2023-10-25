@@ -5,15 +5,14 @@ using namespace std;
 void ProtoProject::unsafe_hard_reset() {
     this->tasks.clear();
 
-    Task* debut = new Task("Debut", 0);
-	Task* fin = new Task("Fin", 0);
-	fin->addDependency(*debut);
-	tasks.push_back(debut);
-	tasks.push_back(fin);
+    Task* begin = new Task("Debut", 0);
+	Task* end = new Task("Fin", 0);
+	end->addDependency(*begin);
+	tasks.push_back(begin);
+	tasks.push_back(end);
 }
 
-ProtoProject::ProtoProject()
-{
+ProtoProject::ProtoProject() {
     unsafe_hard_reset();
 }
 
@@ -36,14 +35,14 @@ bool ProtoProject::ajoute(const string name, const int duration) {
     return (true);
 }
 
-bool ProtoProject::ajoute(const string name, const int duration, const int task_id)
-{
+bool ProtoProject::ajoute(const string name, const int duration, const int task_id) {
 	int i = 0;
-	while (i < tasks.size()){
+	while (i < tasks.size()) {
 		if (tasks[i]->getId() == task_id)
 			break;
 		i++;
 	}
+    
 	if (i == tasks.size() || i == tasks.size() - 1)
 		return (false);
 	

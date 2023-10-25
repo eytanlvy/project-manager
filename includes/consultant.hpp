@@ -1,11 +1,11 @@
 #ifndef CONSULTANT_HPP
 #define CONSULTANT_HPP
 
-#include "gestionnaire.hpp"
+#include "manager.hpp"
 
-class Consultant : public Gestionnaire {
+class Consultant : public Manager {
     public:
-        std::pair<std::vector<int>, int> avis(const RunProject &);
+        std::pair<std::vector<int>, int> review(const RunProject &);
 };
 
 #endif

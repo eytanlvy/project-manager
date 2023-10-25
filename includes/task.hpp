@@ -38,7 +38,6 @@ class Task
 		const bool isMarked() const;
 		void mark(bool value);
 		void PP_postfixe(std::vector<Task*>& sortedTasks);
-
 };
 
 std::ostream& operator<<( std::ostream &out , const Task &x );

@@ -5,7 +5,7 @@ using namespace std;
 
 int Task::lastId = 0;
 
-Task::Task(const string& nom, int duration) : name(nom), id(++lastId), duration(duration), is_accomplished(false)
+Task::Task(const string& name, int duration) : name(name), id(++lastId), duration(duration), is_accomplished(false)
 {
 	//Debug::print << "Naissance de : " << *this << "\n";
 }
@@ -19,15 +19,14 @@ Task::Task(const Task& other): name(other.name), id(other.id), duration(other.du
         dependances.push_back(new Task(*dep));
 }
 
-const Task& Task::operator=(const Task& other)
-{
+const Task& Task::operator=(const Task& other) {
     if (this == &other)
         return *this;
 
-    name = other.name;
-    id = other.id;
-    duration = other.duration;
-    is_accomplished = other.is_accomplished;
+    this->name = other.name;
+    this->id = other.id;
+    this->duration = other.duration;
+    this->is_accomplished = other.is_accomplished;
 
     dependances.clear();
     for (Task* const &dep : other.dependances)
@@ -35,8 +34,7 @@ const Task& Task::operator=(const Task& other)
     return (*this);
 }
 
-Task::~Task()
-{
+Task::~Task() {
     dependances.clear();
     for (Task* tache : dependances)
 		delete tache;
@@ -45,27 +43,23 @@ Task::~Task()
 
 // Getters
 
-string const Task::getName() const
-{
+string const Task::getName() const {
 	return (name);
 }
 
-int const Task::getId() const
-{
+int const Task::getId() const {
 	return (id);
 }
-int const Task::getDuration() const
-{
+
+int const Task::getDuration() const {
 	return (duration);
 }
 
-bool const Task::getIsAccomplished() const
-{
+bool const Task::getIsAccomplished() const {
 	return (is_accomplished);
 }
 
-vector<Task*> const Task::getDependances() const
-{
+vector<Task*> const Task::getDependances() const {
 	return (dependances);
 }
 
@@ -92,8 +86,7 @@ void Task::accomplish_cascade() {
 	this->is_accomplished = true;
 }
 
-bool Task::depends_from(Task & x)
-{
+bool Task::depends_from(Task & x) {
 	int i{0};
     if (id == x.getId())
 		return (true);
@@ -107,16 +100,14 @@ bool Task::depends_from(Task & x)
 	return (false);
 }
 
-bool Task::addDependency(Task & x)
-{
+bool Task::addDependency(Task & x) {
 	if (this->depends_from(x) || x.depends_from(*this) || id == x.getId())
 		return (false);
 	dependances.push_back(&x);
 	return (true);
 }
 
-int Task::durationParallalised()
-{
+int Task::durationParallalised() {
 	int i{0}, maxi{duration};
 	while (i < dependances.size())
 	{
@@ -127,18 +118,15 @@ int Task::durationParallalised()
 	return (max(duration, maxi));
 }
 
-const bool Task::isMarked() const
-{
+const bool Task::isMarked() const {
 	return (marked);
 }
 
-void Task::mark(bool value)
-{
+void Task::mark(bool value) {
 	marked = value;
 }
 
-void Task::PP_postfixe(vector<Task*>& sortedTasks)
-{
+void Task::PP_postfixe(vector<Task*>& sortedTasks) {
     marked = true;
     for (Task* dep : dependances)
     {
@@ -149,8 +137,7 @@ void Task::PP_postfixe(vector<Task*>& sortedTasks)
 }
 
 
-ostream& operator<<( ostream &out , const Task &x )
-{
+ostream& operator<<( ostream &out , const Task &x ) {
 	out << "Task #" << x.getId() << " : " << x.getName();
 	return (out);
 }
