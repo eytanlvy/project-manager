@@ -17,4 +17,16 @@ public:
     static Debug print;
 };
 
+template <typename T>
+void Debug::log(const T& value) {
+    if (Debug::debug_enabled)
+        Debug::output_stream << "<Debug> " << value;
+}
+
+template <typename T>
+Debug& Debug::operator<<(const T& value) {
+    Debug::log(value);
+    return *this;
+}
+
 #endif

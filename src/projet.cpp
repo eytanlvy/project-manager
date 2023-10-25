@@ -1,11 +1,12 @@
 #include "../includes/projet.hpp"
 #include <stdexcept>
+#include "../includes/debug.hpp"
 
 using namespace std;
 
 Projet::Projet()
 {
-	//Debug::print << "Naissance de : " << *this << endl;
+	//Debug::print << "Naissance de : " << *this << "\n";
 }
 
 Projet::Projet(const Projet& other)

@@ -8,21 +8,37 @@ RunProjet::RunProjet(ProtoProjet proto_projet) {
     proto_projet.unsafe_hard_reset();
 };
 
-void RunProjet::run(Tache *tache) {
+bool RunProjet::run(Tache *tache, bool force_dependencies=true) {
+    if (!force_dependencies)
+        return tache->realise();
+    
     tache->realise_cascade();
+
+    return true;
 }
 
-void RunProjet::run(std::vector<Tache *> taches) {
+bool RunProjet::run(std::vector<Tache *> taches, bool force_dependencies=true) {
+    if (!force_dependencies)
+        throw NotImplemented();
+
     for (Tache *task : taches)
         this->run(task);
+
+    return true;
 }
 
-void RunProjet::run(const int tache_id) {
+bool RunProjet::run(const int tache_id, bool force_dependencies=true) {
     Tache *task = this->get_task(tache_id);
-    this->run(task);
+
+    return this->run(task);
 }
 
-void RunProjet::run(std::vector<int> taches_id) {
+bool RunProjet::run(std::vector<int> taches_id, bool force_dependencies=true) {
+    if (!force_dependencies)
+        throw NotImplemented();
+
     for (int task : taches_id)
         this->run(task);
+
+    return true;
 }
