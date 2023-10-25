@@ -20,7 +20,7 @@ public:
 template <typename T>
 void Debug::log(const T& value) {
     if (Debug::debug_enabled)
-        Debug::output_stream << "<Debug> " << value;
+        Debug::output_stream << "🚧 [" << value << "]\n";
 }
 
 template <typename T>

@@ -4,6 +4,7 @@
 
 #include "../includes/tache.hpp"
 #include "../includes/proto_projet.hpp"
+#include "../includes/debug.hpp"
 
 void test_taches() {
     std::cout << "Test 1: Tâches et dépendances" << std::endl;
@@ -51,14 +52,14 @@ void test_proto()
         std::cout << *tache << std::endl;
     }
 
-    protoProjet.ajoute("Tache D", 5, 2); 
+    protoProjet.ajoute("Tache D", 5, 8); 
 
     std::cout << "ProtoProjet après ajout de Tache D:" << std::endl;
     for (Tache* tache : protoProjet.consult_tasks()) {
         std::cout << *tache << std::endl;
     }
 
-    protoProjet.ajoute("Tache E", 2, 1, 3); 
+    protoProjet.ajoute("Tache E", 2, 11, 10); 
 
     std::cout << "ProtoProjet après ajout de Tache E:" << std::endl;
     for (Tache* tache : protoProjet.consult_tasks()) {

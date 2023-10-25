@@ -19,13 +19,12 @@ ProtoProjet::ProtoProjet()
 }
 
 bool ProtoProjet::ajoute(const string nom, const int duree) {
+    srand(time(NULL));
     int i = rand() % taches.size();
     int j = rand() % taches.size();
-    while (i == j) {
-        j = rand() % taches.size();
-    }
-
-	i = i < j ? i : j;
+    if (i == j)
+        j = (j + 1) % taches.size();
+    if (j < i) std::swap(i, j);
     Debug::log("i: " + std::to_string(i) + " j:" + std::to_string(j));
     Tache* t = new Tache(nom, duree);
     Tache* t1 = taches[i];
@@ -33,7 +32,7 @@ bool ProtoProjet::ajoute(const string nom, const int duree) {
 
     t1->ajouteDependance(*t);
     t->ajouteDependance(*t2);
-    taches.insert(taches.begin() + j, t);
+    taches.insert(taches.begin()+j, t);
 	topological_sort();
     return (true);
 }
