@@ -7,7 +7,7 @@
 #include "../includes/debug.hpp"
 
 void test_tasks() {
-    std::cout << "Test 1: Tâches et dépendances" << std::endl;
+    std::cout << "Test 1: Tasks and dependencies" << std::endl;
 
     Task task1("task1", 3);
     Task task2("task2", 2);
@@ -39,33 +39,22 @@ void test_proto()
 {
     std::cout << "Test 2: ProtoProject" << std::endl;
     ProtoProject protoProject;
-    for (Task* task : protoProject.consult_tasks()) {
-        std::cout << *task << std::endl;
-    }
 
-    protoProject.add("Tache A", 3);
-    protoProject.add("Tache B", 2);
-    protoProject.add("Tache C", 4);
+    protoProject.add("Task D", 5, 6); 
+    assert(protoProject.consult_tasks()[1]->getId() == 8);  
 
-    std::cout << "ProtoProject après ajout de tâches aléatoires:" << std::endl;
-    for (Task* task : protoProject.consult_tasks()) {
-        std::cout << *task << std::endl;
-    }
+    protoProject.add("Task E", 2, 8, 6); 
+    assert(protoProject.consult_tasks()[2]->getId() == 9);
 
-    protoProject.add("Tache D", 5, 8); 
 
-    std::cout << "ProtoProject après ajout de Tache D:" << std::endl;
-    for (Task* task : protoProject.consult_tasks()) {
-        std::cout << *task << std::endl;
-    }
+    protoProject.add("Task A", 3);
+    protoProject.add("Task B", 2);
+    protoProject.add("Task C", 4);
+    assert(protoProject.consult_tasks().size() == 7);
 
-    protoProject.add("Tache E", 2, 11, 10); 
-
-    std::cout << "ProtoProject après ajout de Tache E:" << std::endl;
-    for (Task* task : protoProject.consult_tasks()) {
-        std::cout << *task << std::endl;
-    }
-
+    protoProject.add("Task F", 2, 0, 6);
+    protoProject.add("Task G", 1, 5);
+    assert(protoProject.consult_tasks().size() == 7);
 }
 
 int main(void) {

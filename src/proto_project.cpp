@@ -9,8 +9,8 @@ void ProtoProject::unsafe_hard_reset() {
     Task* begin = new Task("Debut", 0);
 	Task* end = new Task("Fin", 0);
 	end->addDependency(*begin);
-	tasks.push_back(begin);
 	tasks.push_back(end);
+	tasks.push_back(begin);
 }
 
 ProtoProject::ProtoProject() {
@@ -24,7 +24,7 @@ bool ProtoProject::add(const string nom, const int duree) {
     if (i == j)
         j = (j + 1) % tasks.size();
     if (j < i) std::swap(i, j);
-    Debug::log("i: " + std::to_string(i) + " j:" + std::to_string(j));
+
     Task* t = new Task(nom, duree);
     Task* t1 = tasks[i];
     Task* t2 = tasks[j];
@@ -71,17 +71,14 @@ bool ProtoProject::add(const string nom, const int duree, const int task1, const
     }
     if (i == -1 || j == -1)
         return (false);
-    
+    if (j < i) std::swap(i, j);
     Task* t = new Task(nom, duree);
-    Task* t1 = i < j ? tasks[i] : tasks[j];
-    Task* t2 = i < j ? tasks[j] : tasks[i];
+    Task* t1 = tasks[i];
+    Task* t2 = tasks[j];
 
     t1->addDependency(*t);
     t->addDependency(*t2);
-    if (i < j)
-        tasks.insert(tasks.begin() + j, t);
-    else
-        tasks.insert(tasks.begin() + i, t);
+    tasks.insert(tasks.begin() + j, t);
 	topological_sort();
     return (true);
 }
