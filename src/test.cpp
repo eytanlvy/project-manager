@@ -84,7 +84,7 @@ void test_cascade() {
         char current_char = (char)((int)'A' + i);
         std::string current_name = "Task " + std::to_string(current_char);
         
-        protoProject.add(current_name, 1, i);
+        protoProject.add(current_name, 1);
         tasks.push_back(i);
     }
 

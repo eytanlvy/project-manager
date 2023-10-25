@@ -9,6 +9,7 @@ class ProtoProject : public Project {
 	friend class RunProject;
 	private:
 		void unsafe_hard_reset();
+		void insert_between_two_tasks(Task *new_task, Task *task_after, Task *task_before);
 	public:
 		ProtoProject();
 		ProtoProject(const ProtoProject& other);

@@ -73,6 +73,6 @@ void Project::topological_sort() {
 }
 
 void Project::cleanMarks() {
-    for (Task* task : tasks)
+    for (Task* task : this->tasks)
         task->mark(0);
 }
