@@ -29,8 +29,7 @@ bool RunProject::run(std::vector<Task *> tasks, bool force_dependencies=true) {
 
 bool RunProject::run(const int tache_id, bool force_dependencies=true) {
     Task *task = this->get_task(tache_id);
-
-    return this->run(task);
+    return this->run(task, force_dependencies);
 }
 
 bool RunProject::run(std::vector<int> taches_id, bool force_dependencies=true) {
