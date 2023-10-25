@@ -1,43 +1,46 @@
-# ifndef TACHE_HPP
-# define TACHE_HPP
+#ifndef TACHE_HPP
+#define TACHE_HPP
 
-# include <iostream>
-# include <vector>
-# include <string>
-# include <cassert>  
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cassert>  
 
 class Tache
 {
 	private:
-		string nom;
+		std::string nom;
 		int id;
 		int duree;
 		bool realisee;
-		vector<Tache*> dependances;
+		std::vector<Tache*> dependances;
 		static int lastId;
 		bool marked{false};
 
 	public:
-		Tache(const string& nom, int duree);
+		Tache(const std::string& nom, int duree);
 		Tache(const Tache& other);
+		virtual ~Tache();
 		const Tache& operator=(const Tache& other);
-		string const getNom() const;
+
+		std::string const getNom() const;
 		int const getId() const;
 		int const getDuree() const;
 		bool const getRealisee() const;
-		vector<Tache*> const getDependances() const;
+		std::vector<Tache*> const getDependances() const;
+		bool realisable();
 		bool realise();
+		void realise_cascade();
 		bool depends_from(Tache & x);
 		bool ajouteDependance(Tache & x);
 		int dureeParal();
-		virtual ~Tache();
 
 		const bool is_marked() const;
 		void mark(bool value);
-		void PP_postfixe(vector<Tache*>& sortedTasks);
+		void PP_postfixe(std::vector<Tache*>& sortedTasks);
 
 };
 
-ostream& operator<<( ostream &out , const Tache &x );
+std::ostream& operator<<( std::ostream &out , const Tache &x );
 
-# endif
+#endif

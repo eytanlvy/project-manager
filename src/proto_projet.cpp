@@ -2,14 +2,19 @@
 
 using namespace std;
 
+void ProtoProjet::unsafe_hard_reset() {
+    this->taches.clear();
 
-ProtoProjet::ProtoProjet()
-{
-	Tache* debut = new Tache("Debut", 0);
+    Tache* debut = new Tache("Debut", 0);
 	Tache* fin = new Tache("Fin", 0);
 	fin->ajouteDependance(*debut);
 	taches.push_back(fin);
 	taches.push_back(debut);
+}
+
+ProtoProjet::ProtoProjet()
+{
+    unsafe_hard_reset();
 }
 
 bool ProtoProjet::ajoute(const string nom, const int duree) {

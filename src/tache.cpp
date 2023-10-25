@@ -1,4 +1,5 @@
-# include "../includes/tache.hpp"
+#include "../includes/tache.hpp"
+#include "../includes/debug.hpp"
 
 using namespace std;
 
@@ -6,18 +7,16 @@ int Tache::lastId = 0;
 
 Tache::Tache(const string& nom, int duree) : nom(nom), id(++lastId), duree(duree), realisee(false)
 {
-	cout << "Naissance de : " << *this << endl;
+	//Debug::print << "Naissance de : " << *this << "\n";
 }
 
 Tache::Tache(const Tache& other): nom(other.nom), id(other.id), duree(other.duree), realisee(other.realisee)
 {
-    cout << "Copie de : " << *this << endl;
+    //Debug::print << "Copie de : " << *this << endl;
     dependances.clear();
 
     for (Tache* const &dep : other.dependances)
-	{
         dependances.push_back(new Tache(*dep));
-	}
 }
 
 const Tache& Tache::operator=(const Tache& other)
@@ -32,9 +31,7 @@ const Tache& Tache::operator=(const Tache& other)
 
     dependances.clear();
     for (Tache* const &dep : other.dependances)
-	{
 		dependances.push_back(new Tache(*dep));
-	}
     return (*this);
 }
 
@@ -43,7 +40,7 @@ Tache::~Tache()
     dependances.clear();
     for (Tache* tache : dependances)
 		delete tache;
-	cout << "Cellule détruite: " << *this << endl;
+	//Debug::print << "Cellule détruite: " << *this << endl;
 }
 
 // Getters
@@ -74,17 +71,25 @@ vector<Tache*> const Tache::getDependances() const
 
 //Methods
 
-bool Tache::realise()
-{
-	int i{0};
-	while (i < dependances.size())
-	{
-		if (!dependances[i]->getRealisee())
-			return (false);
-		i++;
-	}
-	realisee = true;
-	return (true);
+bool Tache::realisable() {
+	for (Tache *dependency: this->getDependances())
+			if (!dependency->getRealisee())
+				return false;
+	return true;
+}
+
+bool Tache::realise() { // safe process
+	return (this->realisee = this->realisable());
+}
+
+void Tache::realise_cascade() {
+	if (this->realisee)
+		return;
+
+	for (Tache *dependency: this->getDependances())
+        dependency->realise_cascade();
+
+	this->realisee = true;
 }
 
 bool Tache::depends_from(Tache & x)
