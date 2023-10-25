@@ -9,24 +9,6 @@ Project::Project()
 	//Debug::log("Naissance de : " + (*this) + "\n");
 }
 
-Project::Project(const Project& other) {
-	this->tasks.clear();
-	for (Task* const &task : other.tasks) {
-		this->tasks.push_back(new Task(*task));
-	}
-}
-
-Project& Project::operator=(const Project& other) {
-	if (this == &other) {
-		return *this;
-	}
-	tasks.clear();
-	for (Task* const &task : other.tasks) {
-		tasks.push_back(new Task(*task));
-	}
-	return *this;
-}
-
 Project::~Project()
 {
 	tasks.clear();
@@ -83,14 +65,13 @@ Task* Project::contains (int id) {
 
 void Project::topological_sort() {
 	cleanMarks();
-
+	
     vector<Task*> sortedTasks;
 
-    // Parcourir toutes les tâches du projet
     for (Task* task : tasks)
-        // Si la tâche n'est pas marquée, commencez un parcours en profondeur postfixe
         if (!task->isMarked())
             task->PP_postfixe(sortedTasks);
+	std::reverse(sortedTasks.begin(), sortedTasks.end());
 }
 
 void Project::cleanMarks() {
