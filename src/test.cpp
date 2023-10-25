@@ -57,8 +57,6 @@ void test_proto() {
     protoProject.add("Task G", 1, 5);
     assert(protoProject.consult_tasks().size() == 7);
 
-    for (Task *task: protoProject.consult_tasks())
-        Debug::log(*task);
 }
 
 
@@ -87,15 +85,15 @@ int main(void) {
             << test_functions[i].second << " \t| " << std::flush;
         
         if (test_a_function(test_functions[i].first)) {
-            std::cout << "checked";
+            std::cout << "✅";
             successfull++;
-        } else std::cout << "not checked";
+        } else std::cout << "❌";
         std::cout << std::endl;
     }
     
     std::cout << "\n" << std::to_string(successfull) << "/" << 
         std::to_string(test_functions.size()) << 
-        " tests were successfull!" << std::endl;
+        " tests were successfull! 🎉" << std::endl;
     if (successfull != test_functions.size())
         return EXIT_FAILURE;
     
