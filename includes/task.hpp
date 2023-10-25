@@ -33,7 +33,7 @@ class Task
 		void accomplish_cascade();
 		bool depends_from(Task & x);
 		bool addDependency(Task & x);
-		int durationParallalised();
+		int durationParallelized();
 
 		const bool isMarked() const;
 		void mark(bool value);

@@ -31,7 +31,7 @@ void test_tasks() {
     task3 = task5;
 	assert(task3.depends_from(task1) && task3.depends_from(task2) &&task3.depends_from(task4));
 	assert(task5.depends_from(task1) && task5.depends_from(task2) && task5.depends_from(task4));
-	assert(task5.durationParallalised() == task3.durationParallalised());
+	assert(task5.durationParallelized() == task3.durationParallelized());
 }
 
 int main(void) {

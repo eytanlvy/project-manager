@@ -107,12 +107,12 @@ bool Task::addDependency(Task & x) {
 	return (true);
 }
 
-int Task::durationParallalised() {
+int Task::durationParallelized() {
 	int i{0}, maxi{duration};
 	while (i < dependances.size())
 	{
 		if (!dependances[i]->getIsAccomplished())
-			maxi = max(dependances[i]->durationParallalised(), maxi);
+			maxi = max(dependances[i]->durationParallelized(), maxi);
 		i++;
 	}
 	return (max(duration, maxi));
