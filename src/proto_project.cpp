@@ -17,12 +17,20 @@ ProtoProject::ProtoProject() {
     unsafe_hard_reset();
 }
 
+ProtoProject::ProtoProject(const ProtoProject& other) {
+    this->tasks.clear();
+    for (Task* const &task : other.tasks)
+        tasks.push_back(new Task(*task));
+}
+
 bool ProtoProject::add(const string nom, const int duree) {
     srand(time(NULL));
     int i = rand() % tasks.size();
     int j = rand() % tasks.size();
-    if (i == j)
-        j = (j + 1) % tasks.size();
+    while (i == j){
+        i = rand() % tasks.size();
+        j = rand() % tasks.size();
+    }
     if (j < i) std::swap(i, j);
 
     Task* t = new Task(nom, duree);

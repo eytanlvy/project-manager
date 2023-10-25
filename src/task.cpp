@@ -19,21 +19,6 @@ Task::Task(const Task& other): name(other.name), id(other.id), duration(other.du
         dependances.push_back(new Task(*dep));
 }
 
-const Task& Task::operator=(const Task& other) {
-    if (this == &other)
-        return *this;
-
-    this->name = other.name;
-    this->id = other.id;
-    this->duration = other.duration;
-    this->is_accomplished = other.is_accomplished;
-
-    dependances.clear();
-    for (Task* const &dep : other.dependances)
-		dependances.push_back(new Task(*dep));
-    return (*this);
-}
-
 Task::~Task() {
     dependances.clear();
     for (Task* tache : dependances)

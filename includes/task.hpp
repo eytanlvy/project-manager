@@ -17,11 +17,13 @@ class Task
 		static int lastId;
 		bool marked{false};
 
-	public:
-		Task(const std::string& name, int duration);
 		Task(const Task& other);
+
+	public:
+		friend class ProtoProject;
+		Task(const std::string& name, int duration);
 		virtual ~Task();
-		const Task& operator=(const Task& other);
+		const Task& operator=(const Task& other)=delete;
 
 		std::string const getName() const;
 		int const getId() const;

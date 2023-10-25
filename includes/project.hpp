@@ -10,12 +10,12 @@ class Project
 	protected:
 		std::vector <Task*> tasks;
 		Task *get_task(const int task_id);
-	public:
 		Project();
-		Project(const Project& other);
-		virtual ~Project();
+	public:
 		
-		Project& operator=(const Project& other);
+		virtual ~Project();
+		Project(const Project& other) = delete;
+		Project& operator=(const Project& other) = delete;
 		
 		std::vector<Task*> const consult_tasks() const;
 		std::pair<int,int> pick_two_random_tasks();

@@ -31,10 +31,6 @@ void test_tasks() {
     task4.addDependency(task2);
     task5.addDependency(task4);
 
-    task3 = task5;
-	assert(task3.depends_from(task1) && task3.depends_from(task2) &&task3.depends_from(task4));
-	assert(task5.depends_from(task1) && task5.depends_from(task2) && task5.depends_from(task4));
-	assert(task5.durationParallelized() == task3.durationParallelized());
 }
 
 void test_proto() {
@@ -92,8 +88,10 @@ int main(void) {
     }
     
     std::cout << "\n" << std::to_string(successfull) << "/" << 
-        std::to_string(test_functions.size()) << 
-        " tests were successfull! 🎉" << std::endl;
+        std::to_string(test_functions.size());
+        if (successfull == test_functions.size())
+            std::cout <<" tests were successfull! 🎉" << std::endl;
+        else std::cout << " tests were successfull. 😢" << std::endl;
     if (successfull != test_functions.size())
         return EXIT_FAILURE;
     
