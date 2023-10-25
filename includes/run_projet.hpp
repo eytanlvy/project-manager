@@ -7,12 +7,12 @@
 
 class RunProjet : public Projet {
 	private:
-		void run(Tache *tache);
-		void run(std::vector<Tache*> taches);
+		bool run(Tache *tache, bool force_dependencies);
+		bool run(std::vector<Tache*> taches, bool force_dependencies);
 	public:
 		RunProjet(ProtoProjet proto_projet);
-		void run(const int tache_id);
-		void run(std::vector<int> taches_id);
+		bool run(const int tache_id, bool force_dependencies);
+		bool run(std::vector<int> taches_id, bool force_dependencies);
 };
 
 #endif

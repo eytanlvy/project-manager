@@ -8,15 +8,3 @@
 #endif
 
 std::ostream& Debug::output_stream = std::cerr;
-
-template <typename T>
-void Debug::log(const T& value) {
-    if (Debug::debug_enabled)
-        Debug::output_stream << "<Debug> " << value << "\n";
-}
-
-template <typename T>
-Debug& Debug::operator<<(const T& value) {
-    Debug::log(value);
-    return *this;
-}
