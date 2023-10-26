@@ -6,8 +6,8 @@ using namespace std;
 void ProtoProject::unsafe_hard_reset() {
     this->tasks.clear();
 
+    Task* end = new Task("Fin", 0);
     Task* begin = new Task("Debut", 0);
-	Task* end = new Task("Fin", 0);
 	end->addDependency(*begin);
 	tasks.push_back(end);
 	tasks.push_back(begin);
@@ -34,7 +34,7 @@ bool ProtoProject::add(const string name, const int duration, const int task_id)
 {
     Task *task_before = get_task(task_id);
 
-    if (task_before == tasks.front())
+    if (task_before == tasks.front() || task_before == nullptr)
         return false;
         
     this->insert_between_two_tasks(new Task(name, duration), tasks.front(), task_before);

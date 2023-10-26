@@ -35,14 +35,14 @@ void test_tasks() {
 }
 
 void test_proto() {
-    test_tasks(); // test non indépendant ?
     ProtoProject protoProject;
 
-    protoProject.add("Task D", 5, 6); 
-    assert(protoProject.consult_tasks()[1]->getId() == 8);
 
-    protoProject.add("Task E", 2, 8, 6); 
-    assert(protoProject.consult_tasks()[2]->getId() == 9);
+    protoProject.add("Task D", 5, 2); 
+    assert(protoProject.consult_tasks()[1]->getId() == 3);
+
+    protoProject.add("Task E", 2, 3, 1); 
+    assert(protoProject.consult_tasks()[1]->getId() == 4);
 
 
     protoProject.add("Task A", 3);
@@ -50,8 +50,10 @@ void test_proto() {
     protoProject.add("Task C", 4);
     assert(protoProject.consult_tasks().size() == 7);
 
-    protoProject.add("Task F", 2, 0, 6);
-    protoProject.add("Task G", 1, 5);
+    protoProject.add("Task F", 2, 0, 0);
+    protoProject.add("Task G", 1, 10);
+    protoProject.add("Task H", 1, 10, 1);
+    protoProject.add("Task I", 1, 0);
     assert(protoProject.consult_tasks().size() == 7);
 
     ProtoProject protoProject2(protoProject);
