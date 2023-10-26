@@ -8,7 +8,7 @@ RunProject::RunProject(ProtoProject proto_projet) {
     proto_projet.unsafe_hard_reset();
 };
 
-bool RunProject::run(Task *tache, bool force_dependencies=true) {
+bool RunProject::run(Task *tache, bool force_dependencies) {
     if (!force_dependencies)
         return tache->accomplish();
     
@@ -17,7 +17,7 @@ bool RunProject::run(Task *tache, bool force_dependencies=true) {
     return true;
 }
 
-bool RunProject::run(std::vector<Task *> tasks, bool force_dependencies=true) {
+bool RunProject::run(std::vector<Task *> tasks, bool force_dependencies) {
     if (!force_dependencies)
         throw NotImplemented();
 
@@ -27,13 +27,12 @@ bool RunProject::run(std::vector<Task *> tasks, bool force_dependencies=true) {
     return true;
 }
 
-bool RunProject::run(const int tache_id, bool force_dependencies=true) {
+bool RunProject::run(const int tache_id, bool force_dependencies) {
     Task *task = this->get_task(tache_id);
-
-    return this->run(task);
+    return this->run(task, force_dependencies);
 }
 
-bool RunProject::run(std::vector<int> taches_id, bool force_dependencies=true) {
+bool RunProject::run(std::vector<int> taches_id, bool force_dependencies) {
     if (!force_dependencies)
         throw NotImplemented();
 

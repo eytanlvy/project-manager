@@ -5,7 +5,7 @@
 
 class Consultant : public Manager {
     public:
-        std::pair<std::vector<int>, int> review(const RunProject &);
+        std::pair<std::vector<int>, int> review(const RunProject & project);
 };
 
 #endif

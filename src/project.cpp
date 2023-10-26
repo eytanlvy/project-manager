@@ -1,6 +1,7 @@
 #include "../includes/project.hpp"
 #include <stdexcept>
 #include "../includes/debug.hpp"
+#include <algorithm>
 
 using namespace std;
 
@@ -29,8 +30,6 @@ Task *Project::get_task(const int task_id) {
 	for (Task *task : this->tasks)
 		if (task->getId() == task_id)
 			return task;
-	
-	throw std::invalid_argument("This task id doesn't exist.");
 	return nullptr;
 }
 
@@ -68,13 +67,14 @@ void Project::topological_sort() {
 
     vector<Task*> sortedTasks;
 
-    for (Task* task : tasks)
-        if (!task->isMarked())
-            task->PP_postfixe(sortedTasks);
+    for(Task* task : tasks)
+		if (!task->isMarked())
+        	task->PP_postfixe(sortedTasks);
+	
 	std::reverse(sortedTasks.begin(), sortedTasks.end());
 }
 
 void Project::cleanMarks() {
-    for (Task* task : tasks)
+    for (Task* task : this->tasks)
         task->mark(0);
 }
