@@ -1,6 +1,7 @@
 #include "../includes/project.hpp"
 #include <stdexcept>
 #include "../includes/debug.hpp"
+#include <algorithm>
 
 using namespace std;
 
@@ -66,9 +67,10 @@ void Project::topological_sort() {
 
     vector<Task*> sortedTasks;
 
-    for (Task* task : tasks)
-        if (!task->isMarked())
-            task->PP_postfixe(sortedTasks);
+    for(Task* task : tasks)
+		if (!task->isMarked())
+        	task->PP_postfixe(sortedTasks);
+	
 	std::reverse(sortedTasks.begin(), sortedTasks.end());
 }
 
