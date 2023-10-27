@@ -12,6 +12,6 @@ std::pair<std::vector<int>, int> Expert::review(const RunProject & project) {
     int remaning_time = 0;
 
     throw new NotImplemented();
-
+    std::cout << "test" << std::endl;
     return {remaning_tasks, remaning_time};
 }
