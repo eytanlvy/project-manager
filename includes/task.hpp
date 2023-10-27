@@ -13,7 +13,7 @@ class Task
 		int id;
 		int duration;
 		bool is_accomplished;
-		std::vector<Task*> dependances;
+		std::vector<Task*> dependencies;
 		static int lastId;
 		bool marked{false};
 
@@ -28,7 +28,7 @@ class Task
 		std::string const getName() const;
 		int const getId() const;
 		int const getDuration() const;
-		bool const getIsAccomplished() const;
+		bool const isAccomplished() const;
 		std::vector<Task*> const getDependances() const;
 		bool is_accomplishable();
 		bool accomplish();
