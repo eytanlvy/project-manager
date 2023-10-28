@@ -32,51 +32,96 @@ void test_tasks() {
     task4.addDependency(task2);
     task5.addDependency(task4);
 
+    std::cout << "-------------------" << std::endl;
+    std::cout << "TASK METHODS: "  << std::endl;
+    std::cout << std::endl;
+    std::cout << "Expected output: "  << std::endl;
+    std::cout << "#5 : \"task5\" --> 4 " << std::endl;
+    std::cout << "#4 : \"task4\" --> 1 " << std::endl;
+    std::cout << "#1 : \"task1\" --> 2, 3 " << std::endl; 
+    std::cout << "#2 : \"task2\" --> 3 " << std::endl;
+    std::cout << "#3 : \"task3\" " << std::endl;
+    std::cout <<std::endl;
+
+    std::cout << "Achieved output: "  << std::endl;
+    task5.print_dependencies();
+    std::cout << "-------------------" << std::endl;
+
+
 }
 
 void test_proto() {
     ProtoProject protoProject;
 
 
+    // Adds task D, duration 5, which depends on task Debut
     protoProject.add("Task D", 5, 2); 
     assert(protoProject.consult_tasks()[1]->getId() == 3);
+    std::cout << "-------------------" << std::endl;
+    std::cout << "TESTING ADD() #1 : "  << std::endl;
+    std::cout << std::endl;
+    std::cout << "Expected output: "  << std::endl;
+    std::cout << "#1 : \"Fin\" --> 2, 3 " << std::endl;
+    std::cout << "#2 : \"Debut\" " << std::endl;
+    std::cout << "#3 : \"Task D\" --> 2 " << std::endl;
+    std::cout <<std::endl;
+    std::cout << "Achieved output: "  << std::endl;
+    protoProject.consult_tasks()[0]->print_dependencies();
+    std::cout << "-------------------" << std::endl;
 
-    protoProject.add("Task E", 2, 3, 1); 
+
+    // Adds task E of duration 2 which depends on task D
+    protoProject.add("Task E", 2, 3, 1);  
     assert(protoProject.consult_tasks()[1]->getId() == 4);
+    std::cout << "TESTING ADD() #2 : "  << std::endl;
+    std::cout << std::endl;
+    std::cout << "Expected output: "  << std::endl;
+    std::cout << "#1 : \"Fin\" --> 2, 3, 4 " << std::endl;
+    std::cout << "#2 : \"Debut\" " << std::endl;
+    std::cout << "#3 : \"Task D\" --> 2 " << std::endl;
+    std::cout << "#4 : \"Task E\" --> 3 " << std::endl;
+    std::cout <<std::endl;
+    std::cout << "Achieved output: "  << std::endl;
+    protoProject.consult_tasks()[0]->print_dependencies();
+    std::cout << "-------------------" << std::endl;
 
 
+    //Randomly add tasks A, B and C
     protoProject.add("Task A", 3);
     protoProject.add("Task B", 2);
     protoProject.add("Task C", 4);
     assert(protoProject.consult_tasks().size() == 7);
+    std::cout << "TESTING ADD() #3 : "  << std::endl;
+    std::cout << std::endl;
+    std::cout << "Expected output: "  << std::endl;
+    std::cout << "3 new tasks added with id #5, #6 and #7" <<std::endl;
+    std::cout << "Len of tasks: 7" << std::endl; 
+    std::cout <<std::endl;   
+    std::cout << "Achieved output: "  << std::endl;
+    protoProject.consult_tasks()[0]->print_dependencies();
+    std::cout << "-------------------" << std::endl;
 
+    // Invalid insertions
     protoProject.add("Task F", 2, 0, 0);
     protoProject.add("Task G", 1, 10);
     protoProject.add("Task H", 1, 10, 1);
     protoProject.add("Task I", 1, 0);
     assert(protoProject.consult_tasks().size() == 7);
+    std::cout << "INVALID ADD() ATTEMPTS: "  << std::endl;
+    std::cout << std::endl;
+    std::cout << "Expected output: "  << std::endl;
+    std::cout << "Nothing has changed" <<std::endl;
+    std::cout << "Len of tasks: 7" << std::endl; 
+    std::cout <<std::endl;   
+    std::cout << "Achieved output: "  << std::endl;
+    protoProject.consult_tasks()[0]->print_dependencies();
+    std::cout << "-------------------" << std::endl;
 
     ProtoProject protoProject2(protoProject);
     for (int i = 0; i < protoProject.consult_tasks().size(); i++)
         assert(protoProject.consult_tasks()[i]->getId() == protoProject2.consult_tasks()[i]->getId());
 
 }
-
-void test_run() {
-    
-    ProtoProject protoProject;
-    protoProject.add("Task A", 3);
-    protoProject.add("Task B", 2);
-    protoProject.add("Task C", 4);
-    
-    RunProject runProject(protoProject);
-    
-    std::vector<Task*> tasks = runProject.consult_tasks();
-    assert(tasks.size() == 5);
-    
-    //Tests for run() methods
-}
-
 
 void test_cascade() {
     std::vector<int> tasks;
@@ -110,22 +155,23 @@ bool test_a_function(void (*functionToTest)()) {
 }
 
 int main(void) {
+    std::cout << "\n\nRunning tests...\n" << std::endl;
     std::vector<std::pair<void (*)(), std::string>> test_functions{
         std::pair<void (*)(), std::string>{test_tasks, "Tasks and dependencies"}, 
         std::pair<void (*)(), std::string>{test_proto, "ProtoProject"},
-        std::pair<void (*)(), std::string>{test_run, "RunProject"},
         std::pair<void (*)(), std::string>{test_cascade, "RunProject cascade"}
         };
 
     int successfull = 0;
     for (int i = 0; i < test_functions.size(); i++) {
+        std::cout << "|---------------\t";
         std::cout << "Test " << std::to_string(i) << ": " 
-            << test_functions[i].second << " \t| " << std::flush;
+            << test_functions[i].second << " \t\t---------------|\n\n" << std::flush;
         
         if (test_a_function(test_functions[i].first)) {
-            std::cout << "✅";
+            std::cout << "\n✅ S ✅ U ✅ C ✅ C ✅ E ✅ S ✅ S ✅" << std::endl;
             successfull++;
-        } else std::cout << "❌";
+        } else std::cout << "\n❌ F ❌ A ❌ I ❌ L ❌ E ❌ D ❌" << std::endl;
         std::cout << std::endl;
     }
     

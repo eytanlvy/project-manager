@@ -18,6 +18,7 @@ class Task
 		bool marked{false};
 
 		Task(const Task& other);
+		void print_dependencies(std::vector<int>& printed) const;
 
 	public:
 		friend class ProtoProject;
@@ -29,7 +30,7 @@ class Task
 		int const getId() const;
 		int const getDuration() const;
 		bool const isAccomplished() const;
-		std::vector<Task*> const getDependances() const;
+		std::vector<Task*> const getDependencies() const;
 		bool is_accomplishable();
 		bool accomplish();
 		void accomplish_cascade();
@@ -40,6 +41,8 @@ class Task
 		const bool isMarked() const;
 		void mark(bool value);
 		void PP_postfixe(std::vector<Task*>& sortedTasks);
+
+		void print_dependencies() const;
 };
 
 std::ostream& operator<<( std::ostream &out , const Task &x );
