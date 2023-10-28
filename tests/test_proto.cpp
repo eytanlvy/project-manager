@@ -10,45 +10,7 @@
 #include "../includes/proto_project.hpp"
 #include "../includes/run_project.hpp"
 #include "../includes/debug.hpp"
-
-void test_tasks() {
-    Task task1("task1", 3);
-    Task task2("task2", 2);
-    Task task3("task3", 4);
-
-    task1.addDependency(task2);
-    task1.addDependency(task3);
-    task2.addDependency(task3);
-
-	assert(task1.depends_from(task2));
-	assert(!task2.depends_from(task1));
-	assert(task2.depends_from(task3));
-	assert(!task3.depends_from(task1));
-
-    Task task4("task4", 2);
-    Task task5("task5", 1);
-
-    task4.addDependency(task1);
-    task4.addDependency(task2);
-    task5.addDependency(task4);
-
-    std::cout << "-------------------" << std::endl;
-    std::cout << "TASK METHODS: "  << std::endl;
-    std::cout << std::endl;
-    std::cout << "Expected output: "  << std::endl;
-    std::cout << "#5 : \"task5\" --> 4 " << std::endl;
-    std::cout << "#4 : \"task4\" --> 1 " << std::endl;
-    std::cout << "#1 : \"task1\" --> 2, 3 " << std::endl; 
-    std::cout << "#2 : \"task2\" --> 3 " << std::endl;
-    std::cout << "#3 : \"task3\" " << std::endl;
-    std::cout <<std::endl;
-
-    std::cout << "Achieved output: "  << std::endl;
-    task5.print_dependencies();
-    std::cout << "-------------------" << std::endl;
-
-
-}
+#include "../includes/test.hpp"
 
 void test_proto() {
     ProtoProject protoProject;
@@ -121,67 +83,4 @@ void test_proto() {
     for (int i = 0; i < protoProject.consult_tasks().size(); i++)
         assert(protoProject.consult_tasks()[i]->getId() == protoProject2.consult_tasks()[i]->getId());
 
-}
-
-void test_cascade() {
-    std::vector<int> tasks;
-    ProtoProject protoProject;
-
-    for (int i = 0; i < 6; i++) {
-        char current_char = (char)((int)'A' + i);
-        std::string current_name = "Task " + std::to_string(current_char);
-        
-        protoProject.add(current_name, 1);
-        tasks.push_back(i);
-    }
-
-    RunProject runProject{protoProject};
-    int final_task_id = runProject.consult_tasks().front()->getId();
-    runProject.run(final_task_id);
-}
-
-
-bool test_a_function(void (*functionToTest)()) {
-    pid_t child_pid = fork();
-
-    if (child_pid == 0) {
-        functionToTest();
-        exit(0);
-    }
-
-    int status;
-    waitpid(child_pid, &status, 0);
-    return WIFEXITED(status) && (WEXITSTATUS(status) == 0);
-}
-
-int main(void) {
-    std::cout << "\n\nRunning tests...\n" << std::endl;
-    std::vector<std::pair<void (*)(), std::string>> test_functions{
-        std::pair<void (*)(), std::string>{test_tasks, "Tasks and dependencies"}, 
-        std::pair<void (*)(), std::string>{test_proto, "ProtoProject"},
-        std::pair<void (*)(), std::string>{test_cascade, "RunProject cascade"}
-        };
-
-    int successfull = 0;
-    for (int i = 0; i < test_functions.size(); i++) {
-        std::cout << "|---------------\t";
-        std::cout << "Test " << std::to_string(i) << ": " 
-            << test_functions[i].second << " \t\t---------------|\n\n" << std::flush;
-        
-        if (test_a_function(test_functions[i].first)) {
-            std::cout << "\n✅ S ✅ U ✅ C ✅ C ✅ E ✅ S ✅ S ✅" << std::endl;
-            successfull++;
-        } else std::cout << "\n❌ F ❌ A ❌ I ❌ L ❌ E ❌ D ❌" << std::endl;
-        std::cout << std::endl;
-    }
-    
-    std::cout << "\n" << std::to_string(successfull) << "/" << 
-        std::to_string(test_functions.size());
-        if (successfull == test_functions.size())
-            std::cout <<" tests were successfull! 🎉" << std::endl;
-        else std::cout << " tests were successfull. 😢" << std::endl;
-    if (successfull != test_functions.size())
-        return EXIT_FAILURE;
-    
-    return EXIT_SUCCESS;
 }
