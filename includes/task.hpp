@@ -24,7 +24,7 @@ class Task
 		friend class ProtoProject;
 		Task(const std::string& name, int duration);
 		virtual ~Task();
-		const Task& operator=(const Task& other)=delete;
+		const Task& operator=(const Task& other) = delete;
 
 		std::string const getName() const;
 		int const getId() const;
@@ -35,12 +35,12 @@ class Task
 		bool accomplish();
 		void accomplish_cascade();
 		bool depends_from(Task & x);
-		bool addDependency(Task & x);
+		bool add_dependency(Task & x);
 		int durationParallelized();
 
 		const bool isMarked() const;
 		void mark(bool value);
-		void PP_postfixe(std::vector<Task*>& sortedTasks);
+		void pp_postfixe(std::vector<Task*>& sortedTasks);
 
 		void print_dependencies() const;
 };

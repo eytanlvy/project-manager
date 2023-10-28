@@ -13,7 +13,6 @@ class Project
 		Task *get_task(const int task_id);
 		Project();
 	public:
-		
 		virtual ~Project();
 		Project(const Project& other) = delete;
 		Project& operator=(const Project& other) = delete;
@@ -28,6 +27,7 @@ class Project
 		void cleanMarks();
 	
 };
+
 std::ostream& operator<<( std::ostream &out , const Project &x );
 
 #endif

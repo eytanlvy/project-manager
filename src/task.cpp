@@ -1,6 +1,8 @@
 #include "../includes/task.hpp"
 #include "../includes/debug.hpp"
 
+#include <algorithm>
+
 int Task::lastId = 0;
 
 Task::Task(const std::string& name, int duration) : name(name), id(++lastId), duration(duration), is_accomplished(false)
@@ -83,7 +85,7 @@ bool Task::depends_from(Task & x) {
 	return (false);
 }
 
-bool Task::addDependency(Task & x) {
+bool Task::add_dependency(Task & x) {
 	if (this->depends_from(x) || x.depends_from(*this) || id == x.getId())
 		return (false);
 	dependencies.push_back(&x);
@@ -108,12 +110,12 @@ void Task::mark(bool value) {
 	marked = value;
 }
 
-void Task::PP_postfixe(std::vector<Task*>& sortedTasks) {
+void Task::pp_postfixe(std::vector<Task*>& sortedTasks) {
     marked = true;
     for (Task* dep : dependencies)
     {
         if (!dep->marked)
-            dep->PP_postfixe(sortedTasks);
+            dep->pp_postfixe(sortedTasks);
     }
     sortedTasks.push_back(this);
 }
