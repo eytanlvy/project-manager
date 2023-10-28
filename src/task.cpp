@@ -42,14 +42,14 @@ bool const Task::isAccomplished() const {
 	return (is_accomplished);
 }
 
-std::vector<Task*> const Task::getDependances() const {
+std::vector<Task*> const Task::getDependencies() const {
 	return (dependencies);
 }
 
 //Methods
 
 bool Task::is_accomplishable() {
-	for (Task *dependency: this->getDependances())
+	for (Task *dependency: this->getDependencies())
 			if (!dependency->isAccomplished())
 				return false;
 	return true;
@@ -63,7 +63,7 @@ void Task::accomplish_cascade() {
 	if (this->is_accomplished)
 		return;
 
-	for (Task *dependency: this->getDependances())
+	for (Task *dependency: this->getDependencies())
         dependency->accomplish_cascade();
 
 	this->is_accomplished = true;
@@ -120,6 +120,36 @@ void Task::PP_postfixe(std::vector<Task*>& sortedTasks) {
 
 
 std::ostream& operator<<(std::ostream &out , const Task &x ) {
-	out << "Task #" << x.getId() << " : " << x.getName();
+	out << "#" << x.getId() << " : \"" << x.getName() << "\"";
 	return (out);
+}
+void Task::print_dependencies(std::vector<int>& printed) const {
+    if (std::find(printed.begin(), printed.end(), id) == printed.end()) {
+        printed.push_back(id);
+        std::cout << *this;
+
+        if (!dependencies.empty()) {
+            std::cout << " --> ";
+            bool first = true;
+            for (const Task* dependency : dependencies) {
+                if (first) {
+                    first = false;
+                } else {
+                    std::cout << ", ";
+                }
+                std::cout << dependency->getId();
+            }
+        }
+
+        std::cout << std::endl;
+
+        for (const Task* dependency : dependencies) {
+            dependency->print_dependencies(printed);
+        }
+    }
+}
+
+void Task::print_dependencies() const {
+    std::vector<int> printed;
+    print_dependencies(printed);
 }
