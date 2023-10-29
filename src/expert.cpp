@@ -101,10 +101,12 @@ void Expert::sort_by_distance_to_end(
         );
 }
 
-/*
-    Les taches peuvent être paraléllisées.
-    renvois <liste de tache restantes, dans l'ordre, temps d'execution des taches>
-*/
+/**
+ * Review the project and provide a list of remaining tasks and the total remaining time to complete them.
+ *
+ * @param project A RunProject instance representing the project to be reviewed.
+ * @return A pair containing a vector of task IDs representing the remaining tasks and the total remaining time to complete them with parallelized execution
+ */
 std::pair<std::vector<int>, int> Expert::review(const RunProject & project) {
     std::vector<Task *> tasks = project.consult_tasks();
     std::vector<int> remaning_tasks;

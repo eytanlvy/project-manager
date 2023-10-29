@@ -3,10 +3,12 @@
 
 #include <vector>
 
-/*
-    Une seul personne doit réaliser les tasks => pas de parralèllisation
-    renvois <liste de tache restantes, dans l'ordre, somme du temps des tasks>
-*/
+/**
+ * Review the project and provide a list of remaining tasks and the total remaining time to complete them.
+ *
+ * @param project A RunProject instance representing the project to be reviewed.
+ * @return A pair containing a vector of task IDs representing the remaining tasks and the total remaining time to complete them.
+ */
 std::pair<std::vector<int>, int> Consultant::review(const RunProject &project) {
     std::vector<Task *> tasks = project.consult_tasks();
     std::vector<int> remaning_tasks;
