@@ -68,7 +68,7 @@ void Project::topological_sort() {
     vector<Task*> sortedTasks;
 
     for(Task* task : tasks)
-		if (!task->isMarked())
+		if (!task->is_marked())
         	task->pp_postfixe(sortedTasks);
 	
 	std::reverse(sortedTasks.begin(), sortedTasks.end());

@@ -21,13 +21,13 @@ class Task
 		int duration;
 		bool accomplished;
 		std::vector<Task*> dependencies;
-		static int lastId;
+		static int last_id;
 		bool marked{false};
 
 		Task(const Task& other);
 		void print_dependencies(std::vector<int>& printed) const;
 
-		const bool isMarked() const;
+		const bool is_marked() const;
 		void mark(bool value);
 		void pp_postfixe(std::vector<Task*>& sortedTasks);
 	public:
