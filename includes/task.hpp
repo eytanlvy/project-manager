@@ -11,7 +11,6 @@ class RunProject;
 
 class Task
 {
-	friend class ProtoProject;
 	friend class RunProject;
 	friend class Project;
 
@@ -24,14 +23,13 @@ class Task
 		static int last_id;
 		bool marked{false};
 
-		Task(const Task& other);
 		void print_dependencies(std::vector<int>& printed) const;
 
 		const bool is_marked() const;
 		void mark(bool value);
 		void pp_postfixe(std::vector<Task*>& sortedTasks);
 	public:
-
+		Task(const Task& other);
 		Task(const std::string& name, int duration);
 		virtual ~Task();
 		const Task& operator=(const Task& other) = delete;
