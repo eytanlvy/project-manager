@@ -58,7 +58,7 @@ Task *Project::get_task(const int task_id) {
  * @return Vector of task pointers.
  */
 vector<Task*> const Project::consult_tasks() const {
-	return (tasks);
+	return tasks;
 }
 
 /**

@@ -17,20 +17,6 @@ Task::Task(const std::string& name, int duration) : name(name), id(++last_id), d
 }
 
 /**
- * Copy constructor for the Task class.
- *
- * @param other Task to copy.
- */
-Task::Task(const Task& other): name(other.name), id(other.id), duration(other.duration), accomplished(other.accomplished)
-{
-	Debug::log("Copie de : " + this->get_name() + "\n");
-    dependencies.clear();
-
-    for (Task* const &dep : other.dependencies)
-        dependencies.push_back(new Task(*dep));
-}
-
-/**
  * Destructor for the Task class.
  */
 Task::~Task() {
