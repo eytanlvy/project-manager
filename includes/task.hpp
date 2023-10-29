@@ -11,6 +11,10 @@ class RunProject;
 
 class Task
 {
+	friend class ProtoProject;
+	friend class RunProject;
+	friend class Project;
+
 	private:
 		std::string name;
 		int id;
@@ -23,9 +27,10 @@ class Task
 		Task(const Task& other);
 		void print_dependencies(std::vector<int>& printed) const;
 
+		const bool isMarked() const;
+		void mark(bool value);
+		void pp_postfixe(std::vector<Task*>& sortedTasks);
 	public:
-		friend class ProtoProject;
-		friend class RunProject;
 
 		Task(const std::string& name, int duration);
 		virtual ~Task();
@@ -42,10 +47,6 @@ class Task
 		bool depends_from(Task & x);
 		bool add_dependency(Task & x);
 		int duration_parallelized();
-
-		const bool isMarked() const;
-		void mark(bool value);
-		void pp_postfixe(std::vector<Task*>& sortedTasks);
 
 		void print_dependencies() const;
 };
