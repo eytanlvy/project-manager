@@ -10,15 +10,6 @@ Task::Task(const std::string& name, int duration) : name(name), id(++last_id), d
 	//Debug::print << "Naissance de : " << *this << "\n";
 }
 
-Task::Task(const Task& other): name(other.name), id(other.id), duration(other.duration), accomplished(other.accomplished)
-{
-    //Debug::print << "Copie de : " << *this << endl;
-    dependencies.clear();
-
-    for (Task* const &dep : other.dependencies)
-        dependencies.push_back(new Task(*dep));
-}
-
 Task::~Task() {
     dependencies.clear();
     for (Task* tache : dependencies)

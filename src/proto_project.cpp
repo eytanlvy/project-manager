@@ -17,12 +17,6 @@ ProtoProject::ProtoProject() {
     unsafe_hard_reset();
 }
 
-ProtoProject::ProtoProject(const ProtoProject& other) {
-    this->tasks.clear();
-    for (Task* const &task : other.tasks)
-        tasks.push_back(new Task(*task));
-}
-
 void ProtoProject::insert_between_two_tasks(Task *new_task, Task *task_after, Task *task_before) {
     new_task->add_dependency(*task_before);
     task_after->add_dependency(*new_task);

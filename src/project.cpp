@@ -34,7 +34,7 @@ Task *Project::get_task(const int task_id) {
 }
 
 vector<Task*> const Project::consult_tasks() const {
-	return (tasks);
+	return tasks;
 }
 
 pair<int,int> Project::pick_two_random_tasks() const {

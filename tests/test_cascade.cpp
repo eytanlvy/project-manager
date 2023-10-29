@@ -12,18 +12,30 @@
 #include "../includes/test.hpp"
 
 void test_cascade() {
-    std::vector<int> tasks;
     ProtoProject protoProject;
 
-    for (int i = 0; i < 6; i++) {
-        char current_char = (char)((int)'A' + i);
-        std::string current_name = "Task " + std::to_string(current_char);
-        
-        protoProject.add(current_name, 1);
-        tasks.push_back(i);
-    }
+    protoProject.add("Task A", 2);
+    Task *task_A = protoProject.contains("Task A");
+    protoProject.add("Task B", 2, 3);
+    Task *task_B = protoProject.contains("Task B");
+
+
+    protoProject.add("Task C", 1, task_A->get_id());
+    Task *task_C = protoProject.contains("Task C"); 
+    protoProject.add("Task D", 1, task_C->get_id());
+
+    protoProject.add("Task E", 20, task_B->get_id());
+
+    std::cout << "Create a protoProject" << std::endl;
 
     RunProject runProject{protoProject};
-    int final_task_id = runProject.consult_tasks().front()->get_id();
+
+    int final_task_id = runProject.consult_tasks()[0]->get_id();
+
     runProject.run(final_task_id);
+
+    std::vector<Task *> tasks = runProject.consult_tasks();
+    for (auto task: tasks)
+        std::cout <<"[" << task->is_accomplished() << "], ";
+    std::cout << std::endl;
 }
