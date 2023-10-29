@@ -32,6 +32,7 @@ clean: clean_obj
 	rm -f $(TARGET)
 
 re: clean all
+	./$(TARGET)
 
 debug: CPPFLAGS += -DDEBUG_ENABLED
 debug: all

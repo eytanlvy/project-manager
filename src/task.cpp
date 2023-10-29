@@ -3,7 +3,7 @@
 
 #include <algorithm>
 
-int Task::lastId = 0;
+int Task::last_id = 0;
 
 /**
  * Constructor for the Task class.
@@ -11,7 +11,7 @@ int Task::lastId = 0;
  * @param name Name of the task.
  * @param duration Duration of the task.
  */
-Task::Task(const std::string& name, int duration) : name(name), id(++lastId), duration(duration), accomplished(false)
+Task::Task(const std::string& name, int duration) : name(name), id(++last_id), duration(duration), accomplished(false)
 {
 	Debug::log("Naissance de : " + this->get_name() + "\n");
 }
@@ -153,7 +153,7 @@ int Task::duration_parallelized() {
  *
  * @return True if the task is marked, otherwise false.
  */
-const bool Task::isMarked() const {
+const bool Task::is_marked() const {
 	return (marked);
 }
 

@@ -18,7 +18,7 @@ class Manager {
         ~Manager() = default;
         std::ostream& operator<<(std::ostream& os) = delete;
 
-        virtual std::pair<std::vector<int>, int> review(const RunProject & project);
+        virtual std::pair<std::vector<int>, int> review(const RunProject &);
 };
 
 #endif
