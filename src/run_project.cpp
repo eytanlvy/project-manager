@@ -8,36 +8,50 @@ RunProject::RunProject(ProtoProject proto_projet) {
     proto_projet.unsafe_hard_reset();
 };
 
-bool RunProject::run(Task *tache, bool force_dependencies) {
+void RunProject::reset_tasks(std::vector<bool> memory) {
+    for (int i = 0; i < memory.size(); i++)
+        this->tasks[i]->accomplished = memory[i];
+}
+
+bool RunProject::run(Task *task, bool force_dependencies) {
     if (!force_dependencies)
-        return tache->accomplish();
+        return task->accomplish();
     
-    tache->accomplish_cascade();
+    task->accomplish_cascade();
 
     return true;
 }
 
 bool RunProject::run(std::vector<Task *> tasks, bool force_dependencies) {
-    if (!force_dependencies)
-        throw NotImplemented();
+    if (force_dependencies) {
+        // cas sans erreur
+        for (Task *task : tasks)
+            task->accomplish_cascade();
+        return true;
+    }
 
+    // cas avec erreur
+    std::vector<bool> memory;
     for (Task *task : tasks)
-        this->run(task);
+        memory.push_back(task->is_accomplished());
 
-    return true;
+    bool success = true;
+    for (Task * task : tasks)
+        success &= (task->accomplish());
+    if (success) return true;
+
+    this->reset_tasks(memory);
+    return false;
 }
 
-bool RunProject::run(const int tache_id, bool force_dependencies) {
-    Task *task = this->get_task(tache_id);
+bool RunProject::run(const int task_id, bool force_dependencies) {
+    Task *task = this->get_task(task_id);
     return this->run(task, force_dependencies);
 }
 
-bool RunProject::run(std::vector<int> taches_id, bool force_dependencies) {
-    if (!force_dependencies)
-        throw NotImplemented();
-
-    for (int task : taches_id)
-        this->run(task);
-
-    return true;
+bool RunProject::run(std::vector<int> tasks_id, bool force_dependencies) {
+    std::vector<Task *> tasks;
+    for (int task_id : tasks_id)
+        tasks.push_back(this->get_task(task_id));
+    return this->run(tasks, force_dependencies);
 }

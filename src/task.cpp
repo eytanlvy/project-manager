@@ -5,12 +5,12 @@
 
 int Task::lastId = 0;
 
-Task::Task(const std::string& name, int duration) : name(name), id(++lastId), duration(duration), is_accomplished(false)
+Task::Task(const std::string& name, int duration) : name(name), id(++lastId), duration(duration), accomplished(false)
 {
 	//Debug::print << "Naissance de : " << *this << "\n";
 }
 
-Task::Task(const Task& other): name(other.name), id(other.id), duration(other.duration), is_accomplished(other.is_accomplished)
+Task::Task(const Task& other): name(other.name), id(other.id), duration(other.duration), accomplished(other.accomplished)
 {
     //Debug::print << "Copie de : " << *this << endl;
     dependencies.clear();
@@ -40,8 +40,8 @@ int const Task::getDuration() const {
 	return (duration);
 }
 
-bool const Task::isAccomplished() const {
-	return (is_accomplished);
+bool const Task::is_accomplished() const {
+	return (accomplished);
 }
 
 std::vector<Task*> const Task::getDependencies() const {
@@ -52,23 +52,23 @@ std::vector<Task*> const Task::getDependencies() const {
 
 bool Task::is_accomplishable() {
 	for (Task *dependency: this->getDependencies())
-			if (!dependency->isAccomplished())
+			if (!dependency->is_accomplished())
 				return false;
 	return true;
 }
 
 bool Task::accomplish() { // safe process
-	return (this->is_accomplished = this->is_accomplishable());
+	return (this->accomplished = this->is_accomplishable());
 }
 
 void Task::accomplish_cascade() {
-	if (this->is_accomplished)
+	if (this->accomplished)
 		return;
 
 	for (Task *dependency: this->getDependencies())
         dependency->accomplish_cascade();
 
-	this->is_accomplished = true;
+	this->accomplished = true;
 }
 
 bool Task::depends_from(Task & x) {
@@ -96,7 +96,7 @@ int Task::durationParallelized() {
 	int max{0};
 
 	for (Task *task_to_execute_before : this->dependencies)
-		if (!task_to_execute_before->isAccomplished())
+		if (!task_to_execute_before->is_accomplished())
 			max = std::max(max, task_to_execute_before->durationParallelized());
 	
 	return max + this->duration;
