@@ -8,7 +8,7 @@ OBJDIR = obj
 SRCS = $(wildcard $(SRCDIR)/*.cpp)
 TESTSRCS = $(wildcard $(TESTDIR)/*.cpp)
 OBJS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRCS))
-TESTOBJS = $(patsubst $(TESTDIR)/%.cpp, $(OBJDIR)/%.o, $(TESTSRCS) )
+TESTOBJS = $(patsubst $(TESTDIR)/%.cpp, $(OBJDIR)/%.o, $(TESTSRCS))
 
 TARGET = run
 
@@ -32,3 +32,6 @@ clean: clean_obj
 	rm -f $(TARGET)
 
 re: clean all
+
+debug: CPPFLAGS += -DDEBUG_ENABLED
+debug: all
