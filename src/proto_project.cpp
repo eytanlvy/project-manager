@@ -24,24 +24,6 @@ ProtoProject::ProtoProject() {
     unsafe_hard_reset();
 }
 
-/**
- * Copy constructor for ProtoProject.
- *
- * @param other Another ProtoProject instance to copy.
- */
-ProtoProject::ProtoProject(const ProtoProject& other) {
-    this->tasks.clear();
-    for (Task* const &task : other.tasks)
-        tasks.push_back(new Task(*task));
-}
-
-/**
- * Insert a new task with the given name and duration between two existing tasks.
- *
- * @param new_task The new task to insert.
- * @param task_after The task after which the new task should be inserted.
- * @param task_before The task before which the new task should be inserted.
- */
 void ProtoProject::insert_between_two_tasks(Task *new_task, Task *task_after, Task *task_before) {
     new_task->add_dependency(*task_before);
     task_after->add_dependency(*new_task);

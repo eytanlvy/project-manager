@@ -29,7 +29,7 @@ class Task
 		void mark(bool value);
 		void pp_postfixe(std::vector<Task*>& sortedTasks);
 	public:
-		Task(const Task& other);
+		Task(const Task& other) = delete;
 		Task(const std::string& name, int duration);
 		virtual ~Task();
 		const Task& operator=(const Task& other) = delete;
