@@ -1,5 +1,4 @@
 #include "../includes/consultant.hpp"
-#include "../includes/error_management.hpp"
 
 #include <vector>
 
