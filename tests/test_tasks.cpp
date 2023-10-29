@@ -17,9 +17,9 @@ void test_tasks() {
     Task task2("task2", 2);
     Task task3("task3", 4);
 
-    task1.addDependency(task2);
-    task1.addDependency(task3);
-    task2.addDependency(task3);
+    task1.add_dependency(task2);
+    task1.add_dependency(task3);
+    task2.add_dependency(task3);
 
 	assert(task1.depends_from(task2));
 	assert(!task2.depends_from(task1));
@@ -29,9 +29,9 @@ void test_tasks() {
     Task task4("task4", 2);
     Task task5("task5", 1);
 
-    task4.addDependency(task1);
-    task4.addDependency(task2);
-    task5.addDependency(task4);
+    task4.add_dependency(task1);
+    task4.add_dependency(task2);
+    task5.add_dependency(task4);
 
     std::cout << "-------------------" << std::endl;
     std::cout << "TASK METHODS: "  << std::endl;

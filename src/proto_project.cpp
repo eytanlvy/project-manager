@@ -8,7 +8,7 @@ void ProtoProject::unsafe_hard_reset() {
 
     Task* end = new Task("Fin", 0);
     Task* begin = new Task("Debut", 0);
-	end->addDependency(*begin);
+	end->add_dependency(*begin);
 	tasks.push_back(end);
 	tasks.push_back(begin);
 }
@@ -24,8 +24,8 @@ ProtoProject::ProtoProject(const ProtoProject& other) {
 }
 
 void ProtoProject::insert_between_two_tasks(Task *new_task, Task *task_after, Task *task_before) {
-    new_task->addDependency(*task_before);
-    task_after->addDependency(*new_task);
+    new_task->add_dependency(*task_before);
+    task_after->add_dependency(*new_task);
     this->tasks.push_back(new_task);
 	topological_sort();
 }

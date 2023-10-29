@@ -4,17 +4,19 @@
 #include <iostream>
 
 class Debug {
-public:
-    static std::ostream& output_stream;
-    static bool debug_enabled;
+    public:
+        Debug(const Debug &) = delete;
+        Debug& operator=(const Debug &) = delete;
+        ~Debug() = default;
+        template <typename T>
+        Debug& operator<<(const T&);
 
-    template <typename T>
-    static void log(const T& value);
-    
-    template <typename T>
-    Debug& operator<<(const T& value);
-    
-    static Debug print;
+        template <typename T>
+        static void log(const T&);
+
+        static std::ostream& output_stream;
+        static bool debug_enabled;
+        static Debug print;
 };
 
 template <typename T>

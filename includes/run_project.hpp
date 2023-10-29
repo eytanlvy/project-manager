@@ -7,6 +7,7 @@
 
 class RunProject : public Project {
 	private:
+		void reset_tasks(std::vector<bool> memory);
 		bool run(Task *task, bool force_dependencies = true);
 		bool run(std::vector<Task*> tasks, bool force_dependencies = true);
 	public:

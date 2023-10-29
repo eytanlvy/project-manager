@@ -15,7 +15,7 @@ std::pair<std::vector<int>, int> Consultant::review(const RunProject &project) {
     for (int i = tasks.size() - 1; i >= 0; i--) {
         Task *task = tasks[i];
 
-        if (!task->isAccomplished()) {
+        if (!task->is_accomplished()) {
             remaning_tasks.push_back(task->getId());
             remaning_time += task->getDuration();
         }

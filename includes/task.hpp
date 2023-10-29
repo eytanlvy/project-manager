@@ -6,13 +6,16 @@
 #include <string>
 #include <cassert>  
 
+class ProtoProject;
+class RunProject;
+
 class Task
 {
 	private:
 		std::string name;
 		int id;
 		int duration;
-		bool is_accomplished;
+		bool accomplished;
 		std::vector<Task*> dependencies;
 		static int lastId;
 		bool marked{false};
@@ -22,25 +25,27 @@ class Task
 
 	public:
 		friend class ProtoProject;
+		friend class RunProject;
+
 		Task(const std::string& name, int duration);
 		virtual ~Task();
-		const Task& operator=(const Task& other)=delete;
+		const Task& operator=(const Task& other) = delete;
 
 		std::string const getName() const;
 		int const getId() const;
 		int const getDuration() const;
-		bool const isAccomplished() const;
+		bool const is_accomplished() const;
 		std::vector<Task*> const getDependencies() const;
 		bool is_accomplishable();
 		bool accomplish();
 		void accomplish_cascade();
 		bool depends_from(Task & x);
-		bool addDependency(Task & x);
+		bool add_dependency(Task & x);
 		int durationParallelized();
 
 		const bool isMarked() const;
 		void mark(bool value);
-		void PP_postfixe(std::vector<Task*>& sortedTasks);
+		void pp_postfixe(std::vector<Task*>& sortedTasks);
 
 		void print_dependencies() const;
 };
