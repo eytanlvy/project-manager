@@ -3,8 +3,28 @@
 
 #include "manager.hpp"
 #include <ostream>
+#include <vector>
+#include <map>
 
 class Expert : public Manager {
+    private:
+        static void update_min(
+            int & min_value, int & min_index, 
+            int const & x_value, int const & x_index
+            );
+        static void find_nearest(
+            std::vector<Task *> const &tasks,
+            std::map<int, int> const & map,
+            std::vector<std::vector<int>> const & all_dependencies,
+            int & remaning,
+            std::vector<bool> & visiteds,
+            std::vector<int> & distances,
+            std::vector<int> & result
+        );
+        static void sort_by_distance_to_end(
+            std::vector<Task *> const tasks,
+            std::vector<int> &result
+        );
     public:
         Expert(const Expert &) = default;
         Expert & operator=(const Expert &) = default;

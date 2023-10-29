@@ -36,7 +36,7 @@ int const Task::getId() const {
 	return (id);
 }
 
-int const Task::getDuration() const {
+int const Task::get_duration() const {
 	return (duration);
 }
 
@@ -44,14 +44,14 @@ bool const Task::is_accomplished() const {
 	return (accomplished);
 }
 
-std::vector<Task*> const Task::getDependencies() const {
+std::vector<Task*> const Task::get_dependencies() const {
 	return (dependencies);
 }
 
 //Methods
 
 bool Task::is_accomplishable() {
-	for (Task *dependency: this->getDependencies())
+	for (Task *dependency: this->get_dependencies())
 			if (!dependency->is_accomplished())
 				return false;
 	return true;
@@ -65,7 +65,7 @@ void Task::accomplish_cascade() {
 	if (this->accomplished)
 		return;
 
-	for (Task *dependency: this->getDependencies())
+	for (Task *dependency: this->get_dependencies())
         dependency->accomplish_cascade();
 
 	this->accomplished = true;
@@ -92,12 +92,12 @@ bool Task::add_dependency(Task & x) {
 	return (true);
 }
 
-int Task::durationParallelized() {
+int Task::duration_parallelized() {
 	int max{0};
 
 	for (Task *task_to_execute_before : this->dependencies)
 		if (!task_to_execute_before->is_accomplished())
-			max = std::max(max, task_to_execute_before->durationParallelized());
+			max = std::max(max, task_to_execute_before->duration_parallelized());
 	
 	return max + this->duration;
 }
