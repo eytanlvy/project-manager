@@ -1,4 +1,5 @@
 #include "../includes/run_project.hpp"
+#include "../includes/debug.hpp"
 
 #include <vector>
 
@@ -9,6 +10,7 @@
  * @param proto_project A ProtoProject instance from which to initialize the tasks.
  */
 RunProject::RunProject(ProtoProject proto_projet) {
+    Debug::log("Naissance de RunProjet\n");
     this->tasks = proto_projet.tasks;
     proto_projet.unsafe_hard_reset();
 };
