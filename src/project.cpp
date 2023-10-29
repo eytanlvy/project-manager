@@ -63,7 +63,7 @@ Task* Project::contains (int id) const {
 }
 
 void Project::topological_sort() {
-	cleanMarks();
+	clean_marks();
 
     vector<Task*> sortedTasks;
 
@@ -75,7 +75,7 @@ void Project::topological_sort() {
 	tasks = sortedTasks;
 }
 
-void Project::cleanMarks() {
+void Project::clean_marks() {
     for (Task* task : this->tasks)
         task->mark(0);
 }

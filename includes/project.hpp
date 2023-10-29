@@ -24,7 +24,7 @@ class Project
 		Task *contains(int id) const;
 		
 		void topological_sort();
-		void cleanMarks();
+		void clean_marks();
 	
 };
 
