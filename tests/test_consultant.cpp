@@ -9,12 +9,11 @@
 #include "../includes/task.hpp"
 #include "../includes/proto_project.hpp"
 #include "../includes/run_project.hpp"
-#include "../includes/expert.hpp"
+#include "../includes/consultant.hpp"
 #include "../includes/debug.hpp"
 #include "../includes/test.hpp"
 
-
-void test_expert() {
+void test_consultant() {
     ProtoProject protoProject;
 
     protoProject.add("Task A", 2);
@@ -34,16 +33,16 @@ void test_expert() {
     RunProject runProject{protoProject};
     std::cout << "Convert it to a runProject" << std::endl;
 
-    Expert expert;
-    std::cout << "Initialise an expert" << std::endl;
+    Consultant ct;
+    std::cout << "Initialise a consultant" << std::endl;
     std::cout << std::endl;
 
-    auto review = expert.review(runProject);
+    auto review = ct.review(runProject);
     assert(runProject.consult_tasks().size() == 7);
 
     std::cout << "Expected result" << std::endl;
-    std::cout << "\tTask list : [Debut, Task A, Task B, Task E, Task C, Task D, Fin, ]" << std::endl;
-    std::cout << "\tReview time : 24" << std::endl;
+    std::cout << "\tTask list : [Debut, Task A, Task B, Task C, Task D, Task E, Fin, ]" << std::endl;
+    std::cout << "\tReview time : 26" << std::endl;
 
     std::cout << "Review result" << std::endl;
     std::cout << "\tTask list : " + Debug::task_list_to_string(runProject, review.first) << std::endl;

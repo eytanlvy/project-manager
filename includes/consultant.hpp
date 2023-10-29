@@ -8,6 +8,7 @@ class Consultant : public Manager {
     public:
         std::pair<std::vector<int>, int> review(const RunProject & project);
 
+        Consultant() = default;
         Consultant(const Consultant &) = default;
         Consultant & operator=(const Consultant &) = default;
         ~Consultant() = default;

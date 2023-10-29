@@ -21,6 +21,7 @@ void ProtoProject::unsafe_hard_reset() {
  */
 
 ProtoProject::ProtoProject() {
+    Debug::log("Naissance de ProtoProjet\n");
     unsafe_hard_reset();
 }
 
