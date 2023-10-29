@@ -12,6 +12,12 @@
 #include "../includes/debug.hpp"
 #include "../includes/test.hpp"
 
+std::vector<std::pair<void (*)(), std::string>> test_functions{
+        {test_tasks, "Tasks and dependencies"}, 
+        {test_proto, "ProtoProject"},
+        {test_cascade, "RunProject cascade"},
+        {test_expert, "Expert"}
+        };
 
 bool test_a_function(void (*functionToTest)()) {
     pid_t child_pid = fork();
@@ -28,12 +34,6 @@ bool test_a_function(void (*functionToTest)()) {
 
 int main(void) {
     std::cout << "\n\nRunning tests...\n" << std::endl;
-    std::vector<std::pair<void (*)(), std::string>> test_functions{
-        std::pair<void (*)(), std::string>{test_tasks, "Tasks and dependencies"}, 
-        std::pair<void (*)(), std::string>{test_proto, "ProtoProject"},
-        std::pair<void (*)(), std::string>{test_cascade, "RunProject cascade"}
-        };
-
     int successfull = 0;
     for (int i = 0; i < test_functions.size(); i++) {
         std::cout << "|---------------\t";

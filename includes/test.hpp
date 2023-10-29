@@ -4,5 +4,6 @@
 void test_tasks();
 void test_proto();
 void test_cascade();
+void test_expert();
 
 #endif

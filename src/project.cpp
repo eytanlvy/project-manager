@@ -28,7 +28,7 @@ ostream& operator<<( ostream &out , const Project &x ) {
 
 Task *Project::get_task(const int task_id) {
 	for (Task *task : this->tasks)
-		if (task->getId() == task_id)
+		if (task->get_id() == task_id)
 			return task;
 	return nullptr;
 }
@@ -37,7 +37,7 @@ vector<Task*> const Project::consult_tasks() const {
 	return (tasks);
 }
 
-pair<int,int> Project::pick_two_random_tasks() {
+pair<int,int> Project::pick_two_random_tasks() const {
 	srand(time(NULL));
 	int i =rand() % tasks.size();
 	int j =rand() % tasks.size();
@@ -48,22 +48,22 @@ pair<int,int> Project::pick_two_random_tasks() {
 	return make_pair(i,j);
 }
 
-Task* Project::contains (string name) {
+Task* Project::contains (string name) const {
 	for (Task* task : tasks)
-		if (task->getName() == name)
+		if (task->get_name() == name)
 			return task;
 	return NULL;
 }
 
-Task* Project::contains (int id) {
+Task* Project::contains (int id) const {
 	for (Task* task : tasks)
-		if (task->getId() == id)
+		if (task->get_id() == id)
 			return task;
 	return NULL;
 }
 
 void Project::topological_sort() {
-	cleanMarks();
+	clean_marks();
 
     vector<Task*> sortedTasks;
 
@@ -75,7 +75,7 @@ void Project::topological_sort() {
 	tasks = sortedTasks;
 }
 
-void Project::cleanMarks() {
+void Project::clean_marks() {
     for (Task* task : this->tasks)
         task->mark(0);
 }

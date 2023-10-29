@@ -28,15 +28,15 @@ Task::~Task() {
 
 // Getters
 
-std::string const Task::getName() const {
+std::string const Task::get_name() const {
 	return (name);
 }
 
-int const Task::getId() const {
+int const Task::get_id() const {
 	return (id);
 }
 
-int const Task::getDuration() const {
+int const Task::get_duration() const {
 	return (duration);
 }
 
@@ -44,14 +44,14 @@ bool const Task::is_accomplished() const {
 	return (accomplished);
 }
 
-std::vector<Task*> const Task::getDependencies() const {
+std::vector<Task*> const Task::get_dependencies() const {
 	return (dependencies);
 }
 
 //Methods
 
 bool Task::is_accomplishable() {
-	for (Task *dependency: this->getDependencies())
+	for (Task *dependency: this->get_dependencies())
 			if (!dependency->is_accomplished())
 				return false;
 	return true;
@@ -65,7 +65,7 @@ void Task::accomplish_cascade() {
 	if (this->accomplished)
 		return;
 
-	for (Task *dependency: this->getDependencies())
+	for (Task *dependency: this->get_dependencies())
         dependency->accomplish_cascade();
 
 	this->accomplished = true;
@@ -73,11 +73,11 @@ void Task::accomplish_cascade() {
 
 bool Task::depends_from(Task & x) {
 	int i{0};
-    if (id == x.getId())
+    if (id == x.get_id())
 		return (true);
 	while (i < dependencies.size())
 	{
-		if (dependencies[i]->getId() == x.getId() || dependencies[i]->depends_from(x))
+		if (dependencies[i]->get_id() == x.get_id() || dependencies[i]->depends_from(x))
 			return (true);
 		
 		i++;
@@ -86,18 +86,18 @@ bool Task::depends_from(Task & x) {
 }
 
 bool Task::add_dependency(Task & x) {
-	if (this->depends_from(x) || x.depends_from(*this) || id == x.getId())
+	if (this->depends_from(x) || x.depends_from(*this) || id == x.get_id())
 		return (false);
 	dependencies.push_back(&x);
 	return (true);
 }
 
-int Task::durationParallelized() {
+int Task::duration_parallelized() {
 	int max{0};
 
 	for (Task *task_to_execute_before : this->dependencies)
 		if (!task_to_execute_before->is_accomplished())
-			max = std::max(max, task_to_execute_before->durationParallelized());
+			max = std::max(max, task_to_execute_before->duration_parallelized());
 	
 	return max + this->duration;
 }
@@ -122,7 +122,7 @@ void Task::pp_postfixe(std::vector<Task*>& sortedTasks) {
 
 
 std::ostream& operator<<(std::ostream &out , const Task &x ) {
-	out << "#" << x.getId() << " : \"" << x.getName() << "\"";
+	out << "#" << x.get_id() << " : \"" << x.get_name() << "\"";
 	return (out);
 }
 void Task::print_dependencies(std::vector<int>& printed) const {
@@ -139,7 +139,7 @@ void Task::print_dependencies(std::vector<int>& printed) const {
                 } else {
                     std::cout << ", ";
                 }
-                std::cout << dependency->getId();
+                std::cout << dependency->get_id();
             }
         }
 

@@ -31,17 +31,17 @@ class Task
 		virtual ~Task();
 		const Task& operator=(const Task& other) = delete;
 
-		std::string const getName() const;
-		int const getId() const;
-		int const getDuration() const;
+		std::string const get_name() const;
+		int const get_id() const;
+		int const get_duration() const;
 		bool const is_accomplished() const;
-		std::vector<Task*> const getDependencies() const;
+		std::vector<Task*> const get_dependencies() const;
 		bool is_accomplishable();
 		bool accomplish();
 		void accomplish_cascade();
 		bool depends_from(Task & x);
 		bool add_dependency(Task & x);
-		int durationParallelized();
+		int duration_parallelized();
 
 		const bool isMarked() const;
 		void mark(bool value);

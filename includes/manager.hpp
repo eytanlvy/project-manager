@@ -8,7 +8,11 @@
 #include <iostream>
 
 class Manager {
+    protected:
+        int salary;
     public:
+        Manager() : salary{0} {};
+        Manager(int salary) : salary{salary} {};
         Manager(const Manager &) = default;
         Manager & operator=(const Manager &) = default;
         ~Manager() = default;
