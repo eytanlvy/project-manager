@@ -32,3 +32,4 @@ clean: clean_obj
 	rm -f $(TARGET)
 
 re: clean all
+	./$(TARGET)

@@ -12,6 +12,8 @@ class Project
 		std::vector <Task*> tasks;
 		Task *get_task(const int task_id);
 		Project();
+		void topological_sort();
+		void clean_marks();
 	public:
 		virtual ~Project();
 		Project(const Project& other) = delete;
@@ -22,10 +24,6 @@ class Project
 		
 		Task *contains(std::string name) const;
 		Task *contains(int id) const;
-		
-		void topological_sort();
-		void clean_marks();
-	
 };
 
 std::ostream& operator<<( std::ostream &out , const Project &x );
