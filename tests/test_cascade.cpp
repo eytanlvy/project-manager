@@ -26,7 +26,6 @@ void test_cascade() {
 
     protoProject.add("Task E", 20, task_B->get_id());
 
-    std::cout << "Create a protoProject" << std::endl;
 
     RunProject runProject{protoProject};
 
@@ -34,6 +33,10 @@ void test_cascade() {
 
     runProject.run(final_task_id);
 
+    std::cout << "Expected output" << std::endl;
+    std::cout << "[1], [1], [1], [1], [1], [1], [1], " << std::endl;
+    std::cout << std::endl;
+    std::cout << "Achieved output" << std::endl;
     std::vector<Task *> tasks = runProject.consult_tasks();
     for (auto task: tasks)
         std::cout <<"[" << task->is_accomplished() << "], ";

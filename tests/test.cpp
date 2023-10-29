@@ -15,6 +15,7 @@ std::vector<std::pair<void (*)(), std::string>> test_functions{
         {test_tasks, "Tasks and dependencies"}, 
         {test_proto, "ProtoProject"},
         {test_cascade, "RunProject cascade"},
+        {test_consultant, "Consultant"},
         {test_expert, "Expert"}
         };
 
