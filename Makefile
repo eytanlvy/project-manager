@@ -1,5 +1,5 @@
 CPP = g++
-CPPFLAGS = -std=c++11 -Wall -Wno-sign-compare -DDEBUG_ENABLED
+CPPFLAGS = -std=c++11 -Wall -Wno-sign-compare
 SRCDIR = src
 TESTDIR = tests
 INCDIR = includes

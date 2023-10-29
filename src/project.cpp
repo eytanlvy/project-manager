@@ -7,7 +7,7 @@ using namespace std;
 
 Project::Project()
 {
-	//Debug::log("Naissance de : " + (*this) + "\n");
+	Debug::log("Naissance de projet\n");
 }
 
 Project::~Project()
@@ -15,7 +15,7 @@ Project::~Project()
 	tasks.clear();
 	for (Task* task : tasks)
 		delete task;
-	//Debug::print << "Cellule détruite: " << *this << endl;
+	Debug::log("Projet detruit\n");
 }
 
 ostream& operator<<( ostream &out , const Project &x ) {

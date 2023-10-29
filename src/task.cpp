@@ -7,12 +7,12 @@ int Task::lastId = 0;
 
 Task::Task(const std::string& name, int duration) : name(name), id(++lastId), duration(duration), accomplished(false)
 {
-	//Debug::print << "Naissance de : " << *this << "\n";
+	Debug::log("Naissance de : " + this->get_name() + "\n");
 }
 
 Task::Task(const Task& other): name(other.name), id(other.id), duration(other.duration), accomplished(other.accomplished)
 {
-    //Debug::print << "Copie de : " << *this << endl;
+	Debug::log("Copie de : " + this->get_name() + "\n");
     dependencies.clear();
 
     for (Task* const &dep : other.dependencies)
@@ -23,7 +23,7 @@ Task::~Task() {
     dependencies.clear();
     for (Task* tache : dependencies)
 		delete tache;
-	//Debug::print << "Cellule détruite: " << *this << endl;
+	Debug::log("Tâche " + this->get_name() + "detruite\n");
 }
 
 // Getters
