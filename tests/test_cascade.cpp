@@ -33,7 +33,6 @@ void test_cascade() {
 
     runProject.run(final_task_id);
 
-    std::cout << "-------------------" << std::endl;
     std::cout << "Expected output" << std::endl;
     std::cout << "[1], [1], [1], [1], [1], [1], [1], " << std::endl;
     std::cout << std::endl;
@@ -42,7 +41,6 @@ void test_cascade() {
     for (auto task: tasks)
         std::cout <<"[" << task->is_accomplished() << "], ";
     std::cout << std::endl;
-    std::cout << "-------------------" << std::endl;
 }
 
 void test_cascade2() {
