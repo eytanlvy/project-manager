@@ -19,7 +19,7 @@ void test_expert() {
 
     protoProject.add("Task A", 2);
     auto task_A = protoProject.contains("Task A");
-    protoProject.add("Task B", 2);
+    protoProject.add("Task B", 2, 3);
     auto task_B = protoProject.contains("Task B");
 
 
@@ -38,6 +38,11 @@ void test_expert() {
     std::cout << "Initialise an expert" << std::endl;
 
     auto review = expert.review(runProject);
+    assert(runProject.consult_tasks().size() == 7);
+
+    std::cout << "Expected result" << std::endl;
+    std::cout << "\tTask list : [Debut, Task A, Task B, Task E, Task C, Task D, Fin, ]" << std::endl;
+    std::cout << "\tReview time : 24" << std::endl;
 
     std::cout << "Review result" << std::endl;
     std::cout << "\tTask list : " + Debug::task_list_to_string(runProject, review.first) << std::endl;
