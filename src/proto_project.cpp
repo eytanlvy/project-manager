@@ -63,9 +63,9 @@ bool ProtoProject::add(const string name, const int duration, const int task1, c
     int i{-1}, j{-1};
 
     for (int k = 0; k < tasks.size(); k++){
-        if (tasks[k]->getId() == task1)
+        if (tasks[k]->get_id() == task1)
             i = k;
-        if (tasks[k]->getId() == task2)
+        if (tasks[k]->get_id() == task2)
             j = k;
     }
 

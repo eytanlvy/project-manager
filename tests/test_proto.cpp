@@ -18,7 +18,7 @@ void test_proto() {
 
     // Adds task D, duration 5, which depends on task Debut
     protoProject.add("Task D", 5, 2); 
-    assert(protoProject.consult_tasks()[1]->getId() == 3);
+    assert(protoProject.consult_tasks()[1]->get_id() == 3);
     std::cout << "-------------------" << std::endl;
     std::cout << "TESTING ADD() #1 : "  << std::endl;
     std::cout << std::endl;
@@ -34,7 +34,7 @@ void test_proto() {
 
     // Adds task E of duration 2 which depends on task D
     protoProject.add("Task E", 2, 3, 1);  
-    assert(protoProject.consult_tasks()[1]->getId() == 4);
+    assert(protoProject.consult_tasks()[1]->get_id() == 4);
     std::cout << "TESTING ADD() #2 : "  << std::endl;
     std::cout << std::endl;
     std::cout << "Expected output: "  << std::endl;
@@ -81,6 +81,6 @@ void test_proto() {
 
     ProtoProject protoProject2(protoProject);
     for (int i = 0; i < protoProject.consult_tasks().size(); i++)
-        assert(protoProject.consult_tasks()[i]->getId() == protoProject2.consult_tasks()[i]->getId());
+        assert(protoProject.consult_tasks()[i]->get_id() == protoProject2.consult_tasks()[i]->get_id());
 
 }

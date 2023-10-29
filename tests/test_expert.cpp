@@ -14,13 +14,6 @@
 #include "../includes/debug.hpp"
 #include "../includes/test.hpp"
 
-std::string task_list_to_string(RunProject const & project, std::vector<int> tasks_id) {
-    std::string result = "[";
-    for (auto task_id : tasks_id)
-        result += project.contains(task_id)->getName();
-    result += "]";
-    return result;
-};
 
 void test_expert() {
     ProtoProject protoProject;
@@ -31,23 +24,23 @@ void test_expert() {
     auto task_B = protoProject.contains("Task B");
 
 
-    protoProject.add("Task C", 1, task_A->getId());
+    protoProject.add("Task C", 1, task_A->get_id());
     auto task_C = protoProject.contains("Task C"); 
-    protoProject.add("Task D", 1, task_C->getId());
+    protoProject.add("Task D", 1, task_C->get_id());
 
-    protoProject.add("Task E", 20, task_B->getId());
+    protoProject.add("Task E", 20, task_B->get_id());
 
-    Debug::log("Create a protoProject");
+    std::cout << "Create a protoProject" << std::endl;
 
     RunProject runProject{protoProject};
-    Debug::log("Convert it to a runProject");
+    std::cout << "Convert it to a runProject" << std::endl;
 
     Expert expert;
-    Debug::log("Initialise an expert");
+    std::cout << "Initialise an expert" << std::endl;
 
     auto review = expert.review(runProject);
 
-    Debug::log("Review result");
-    Debug::log("\tTask list : " + task_list_to_string(runProject, review.first));
-    Debug::log("\tReview time : " + std::to_string(review.second));
+    std::cout << "Review result" << std::endl;
+    std::cout << "\tTask list : " + Debug::task_list_to_string(runProject, review.first) << std::endl;
+    std::cout << "\tReview time : " + std::to_string(review.second) << std::endl;
 }

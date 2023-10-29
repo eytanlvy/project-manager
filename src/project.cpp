@@ -28,7 +28,7 @@ ostream& operator<<( ostream &out , const Project &x ) {
 
 Task *Project::get_task(const int task_id) {
 	for (Task *task : this->tasks)
-		if (task->getId() == task_id)
+		if (task->get_id() == task_id)
 			return task;
 	return nullptr;
 }
@@ -50,14 +50,14 @@ pair<int,int> Project::pick_two_random_tasks() const {
 
 Task* Project::contains (string name) const {
 	for (Task* task : tasks)
-		if (task->getName() == name)
+		if (task->get_name() == name)
 			return task;
 	return NULL;
 }
 
 Task* Project::contains (int id) const {
 	for (Task* task : tasks)
-		if (task->getId() == id)
+		if (task->get_id() == id)
 			return task;
 	return NULL;
 }

@@ -31,8 +31,8 @@ class Task
 		virtual ~Task();
 		const Task& operator=(const Task& other) = delete;
 
-		std::string const getName() const;
-		int const getId() const;
+		std::string const get_name() const;
+		int const get_id() const;
 		int const get_duration() const;
 		bool const is_accomplished() const;
 		std::vector<Task*> const get_dependencies() const;

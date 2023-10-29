@@ -2,6 +2,7 @@
 #define DEBUG_HPP
 
 #include <iostream>
+#include <run_project.hpp>
 
 class Debug {
     public:
@@ -10,19 +11,23 @@ class Debug {
         ~Debug() = default;
         template <typename T>
         Debug& operator<<(const T&);
-
+        static Debug print;
+        // -----------------------------------
         template <typename T>
         static void log(const T&);
-
         static std::ostream& output_stream;
         static bool debug_enabled;
-        static Debug print;
+        // -----------------------------------
+        static std::string task_list_to_string(RunProject const & project, std::vector<int> const tasks_id);
+        static std::string task_list_to_string(std::vector<Task *> tasks);
+        static std::string bool_vector_to_string(std::vector<bool> const);
+        static std::string int_vector_to_string(std::vector<int> const);
 };
 
 template <typename T>
 void Debug::log(const T& value) {
     if (Debug::debug_enabled)
-        Debug::output_stream << "🚧 [   " << value << "   ]\n";
+        Debug::output_stream << "🚧 " << value << "\n";
 }
 
 template <typename T>

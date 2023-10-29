@@ -25,6 +25,6 @@ void test_cascade() {
     }
 
     RunProject runProject{protoProject};
-    int final_task_id = runProject.consult_tasks().front()->getId();
+    int final_task_id = runProject.consult_tasks().front()->get_id();
     runProject.run(final_task_id);
 }

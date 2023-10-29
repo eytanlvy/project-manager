@@ -1,6 +1,7 @@
 #include "../includes/expert.hpp"
 #include "../includes/error_management.hpp"
-#include <../includes/task.hpp>
+#include "../includes/task.hpp"
+#include "../includes/debug.hpp"
 
 #include <algorithm>
 #include <tuple>
@@ -16,7 +17,7 @@ void Expert::update_indices_of_necessity(
 }
 
 void Expert::update_min(int & min_value, int & min_index, int const & x_value, int const & x_index) {
-    if (min_value < x_value && min_value != -1) {
+    if (x_value < min_value || min_value == -1) {
         min_value = x_value;
         min_index = x_index;
     }
@@ -33,24 +34,26 @@ void Expert::find_nearest(
     std::vector<int> & indices_of_necessity,
     std::vector<int> & result
 ) {
-
     int min_distance = -1;
     int min_index = -1;
 
     for (int i = 0; i < tasks.size(); i++) {
         Task const *parent = tasks[i];
+        bool is_visited = visiteds[i];
         int parent_distance = distances[i];
-        
-        if(parent_distance == -1) continue;
-        for (int child_index : all_dependencies[map.at(parent->getId())]) {
+        if(!is_visited || parent_distance == -1) continue;
+        std::vector<int> const parent_childs = all_dependencies[map.at(parent->get_id())];
+        for (int child_index : parent_childs) {
             if (visiteds[child_index] || (indices_of_necessity[child_index] != 0)) continue;
-            distances[child_index] = parent_distance + tasks[child_index]->get_duration();
-            update_min(min_distance, min_index, distances[child_index], child_index);
+            
+            int distance_child = parent_distance + tasks[child_index]->get_duration();
+            update_min(min_distance, min_index, distance_child, child_index);
         }
     }
 
     visiteds[min_index] = true;
-    result.push_back(map.at(min_index));
+    distances[min_index] = min_distance;
+    result.push_back(tasks.at(min_index)->get_id());
     update_indices_of_necessity(
         min_index, all_dependencies, indices_of_necessity);
     remaning--;
@@ -63,7 +66,7 @@ void Expert::sort_by_distance_to_end(
 
     std::map<int, int> map;
     for (int i = 0; i < tasks.size(); i++)
-        map.insert({tasks[i]->getId(), i});
+        map.insert({tasks[i]->get_id(), i});
 
     int remaning = 0;
 
@@ -78,16 +81,16 @@ void Expert::sort_by_distance_to_end(
 
         distances.push_back(-1);
         for (Task *dependence : task->get_dependencies()) {
-            int dependence_index = map[dependence->getId()];
+            int dependence_index = map[dependence->get_id()];
             indices_of_necessity[dependence_index]++;
-            all_dependencies[ map[task->getId()] ].push_back(dependence_index);
+            all_dependencies[ map[task->get_id()] ].push_back(dependence_index);
         }
     }
 
     remaning--;
     visiteds[0] = true;
     distances[0] = 0;
-    result.push_back(tasks[0]->getId());
+    result.push_back(tasks[0]->get_id());
     update_indices_of_necessity(
         0, all_dependencies, indices_of_necessity);
 
@@ -107,7 +110,9 @@ std::pair<std::vector<int>, int> Expert::review(const RunProject & project) {
     std::vector<int> remaning_tasks;
 
     int remaning_time = tasks.front()->duration_parallelized();
-    if (tasks[0]->is_accomplished()) return {remaning_tasks, remaning_time};
+    
+    if (tasks[0]->is_accomplished()) 
+        return {remaning_tasks, remaning_time};
 
     sort_by_distance_to_end(tasks, remaning_tasks);
     std::reverse(remaning_tasks.begin(), remaning_tasks.end());
