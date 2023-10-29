@@ -1,5 +1,5 @@
 CPP = g++
-CPPFLAGS = -std=c++11 -Wall -Wno-sign-compare -DDEBUG_ENABLED
+CPPFLAGS = -std=c++11 -Wall -Wno-sign-compare
 SRCDIR = src
 TESTDIR = tests
 INCDIR = includes
@@ -8,7 +8,7 @@ OBJDIR = obj
 SRCS = $(wildcard $(SRCDIR)/*.cpp)
 TESTSRCS = $(wildcard $(TESTDIR)/*.cpp)
 OBJS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRCS))
-TESTOBJS = $(patsubst $(TESTDIR)/%.cpp, $(OBJDIR)/%.o, $(TESTSRCS) )
+TESTOBJS = $(patsubst $(TESTDIR)/%.cpp, $(OBJDIR)/%.o, $(TESTSRCS))
 
 TARGET = run
 
@@ -33,3 +33,6 @@ clean: clean_obj
 
 re: clean all
 	./$(TARGET)
+
+debug: CPPFLAGS += -DDEBUG_ENABLED
+debug: all
