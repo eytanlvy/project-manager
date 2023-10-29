@@ -3,9 +3,9 @@
 
 #include <algorithm>
 
-int Task::lastId = 0;
+int Task::last_id = 0;
 
-Task::Task(const std::string& name, int duration) : name(name), id(++lastId), duration(duration), accomplished(false)
+Task::Task(const std::string& name, int duration) : name(name), id(++last_id), duration(duration), accomplished(false)
 {
 	//Debug::print << "Naissance de : " << *this << "\n";
 }
@@ -102,7 +102,7 @@ int Task::duration_parallelized() {
 	return max + this->duration;
 }
 
-const bool Task::isMarked() const {
+const bool Task::is_marked() const {
 	return (marked);
 }
 
