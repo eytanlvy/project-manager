@@ -6,6 +6,15 @@
 #include <tuple>
 #include <map>
 
+void Expert::update_indices_of_necessity(
+    int const & task_to_free,
+    std::vector<std::vector<int>> const & all_dependencies,
+    std::vector<int> & indices_of_necessity
+) {
+    for (int dependencie : all_dependencies[task_to_free])
+        indices_of_necessity[dependencie]--;
+}
+
 void Expert::update_min(int & min_value, int & min_index, int const & x_value, int const & x_index) {
     if (min_value < x_value && min_value != -1) {
         min_value = x_value;
@@ -21,12 +30,12 @@ void Expert::find_nearest(
     int & remaning,
     std::vector<bool> & visiteds,
     std::vector<int> & distances,
+    std::vector<int> & indices_of_necessity,
     std::vector<int> & result
 ) {
 
     int min_distance = -1;
     int min_index = -1;
-
 
     for (int i = 0; i < tasks.size(); i++) {
         Task const *parent = tasks[i];
@@ -34,7 +43,7 @@ void Expert::find_nearest(
         
         if(parent_distance == -1) continue;
         for (int child_index : all_dependencies[map.at(parent->getId())]) {
-            if (visiteds[child_index]) continue;
+            if (visiteds[child_index] || (indices_of_necessity[child_index] != 0)) continue;
             distances[child_index] = parent_distance + tasks[child_index]->get_duration();
             update_min(min_distance, min_index, distances[child_index], child_index);
         }
@@ -42,6 +51,8 @@ void Expert::find_nearest(
 
     visiteds[min_index] = true;
     result.push_back(map.at(min_index));
+    update_indices_of_necessity(
+        min_index, all_dependencies, indices_of_necessity);
     remaning--;
 }
 
@@ -57,6 +68,7 @@ void Expert::sort_by_distance_to_end(
     int remaning = 0;
 
     std::vector<std::vector<int>> all_dependencies(tasks.size());
+    std::vector<int> indices_of_necessity(tasks.size()); // nombre de tache qui dépendent de la tache
     std::vector<bool> visiteds;
     std::vector<int> distances;
     for (auto task : tasks) {
@@ -65,21 +77,24 @@ void Expert::sort_by_distance_to_end(
             remaning++;
 
         distances.push_back(-1);
-        for (auto dependence : task->get_dependencies())
-            all_dependencies[ map[task->getId()] ].push_back(
-                map[dependence->getId()]
-            );
+        for (Task *dependence : task->get_dependencies()) {
+            int dependence_index = map[dependence->getId()];
+            indices_of_necessity[dependence_index]++;
+            all_dependencies[ map[task->getId()] ].push_back(dependence_index);
+        }
     }
 
     remaning--;
     visiteds[0] = true;
     distances[0] = 0;
     result.push_back(tasks[0]->getId());
+    update_indices_of_necessity(
+        0, all_dependencies, indices_of_necessity);
 
     while (remaning != 0)
         find_nearest(
             tasks, map, all_dependencies, // à ne pas modifier
-            remaning, visiteds, distances, result // à actualiser
+            remaning, visiteds, distances, indices_of_necessity, result // à actualiser
         );
 }
 

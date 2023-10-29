@@ -8,6 +8,11 @@
 
 class Expert : public Manager {
     private:
+        static void update_indices_of_necessity(
+            int const & task_to_free,
+            std::vector<std::vector<int>> const & all_dependencies,
+            std::vector<int> & indices_of_necessity
+        );
         static void update_min(
             int & min_value, int & min_index, 
             int const & x_value, int const & x_index
@@ -19,6 +24,7 @@ class Expert : public Manager {
             int & remaning,
             std::vector<bool> & visiteds,
             std::vector<int> & distances,
+            std::vector<int> & indices_of_necessity,
             std::vector<int> & result
         );
         static void sort_by_distance_to_end(
