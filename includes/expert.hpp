@@ -31,7 +31,9 @@ class Expert : public Manager {
             std::vector<Task *> const tasks,
             std::vector<int> &result
         );
+
     public:
+        Expert() = default;
         Expert(const Expert &) = default;
         Expert & operator=(const Expert &) = default;
         ~Expert() = default;

@@ -15,13 +15,13 @@ class Project
 	public:
 		virtual ~Project();
 		Project(const Project& other) = delete;
-		Project& operator=(const Project& other) = delete;
+		Project& operator=(const Project& other) = default;
 		
 		std::vector<Task*> const consult_tasks() const;
-		std::pair<int,int> pick_two_random_tasks();
+		std::pair<int,int> pick_two_random_tasks() const;
 		
-		Task *contains(std::string name);
-		Task *contains(int id);
+		Task *contains(std::string name) const;
+		Task *contains(int id) const;
 		
 		void topological_sort();
 		void cleanMarks();
