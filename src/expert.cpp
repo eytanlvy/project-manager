@@ -1,5 +1,4 @@
 #include "../includes/expert.hpp"
-#include "../includes/error_management.hpp"
 #include "../includes/task.hpp"
 #include "../includes/debug.hpp"
 
