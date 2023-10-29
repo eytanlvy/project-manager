@@ -16,8 +16,6 @@ class Project
 		void clean_marks();
 	public:
 		virtual ~Project();
-		Project(const Project& other) = delete;
-		Project& operator=(const Project& other) = default;
 		
 		std::vector<Task*> const consult_tasks() const;
 		std::pair<int,int> pick_two_random_tasks() const;
